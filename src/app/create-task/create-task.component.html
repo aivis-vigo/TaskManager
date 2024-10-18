@@ -1,0 +1,32 @@
+<form [formGroup]="currentTask" (ngSubmit)="onSubmit()">
+
+  <div class="form-layout">
+    <div>
+      <label for="title">Title:</label>
+      <input id="title" type="text" formControlName="title">
+    </div>
+
+    <div>
+      <label for="description">Description:</label>
+      <input id="description" type="text" formControlName="description">
+    </div>
+
+    <div>
+      <label for="createdOn">Created On:</label>
+      <input id="createdOn" type="text" formControlName="createdOn">
+    </div>
+
+    <div>
+      <label for="type">Type:</label>
+      <input id="type" type="text" formControlName="type">
+    </div>
+
+    <div>
+      <label for="status">Status:</label>
+      <input id="status" type="text" formControlName="status">
+    </div>
+  </div>
+
+  <button [disabled]="!currentTask.valid" type="submit">Submit</button>
+
+</form>
