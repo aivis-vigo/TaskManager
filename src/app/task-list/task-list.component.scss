@@ -1,0 +1,15 @@
+.list-container {
+  @apply container mx-auto space-y-8;
+}
+
+ul {
+  @apply list-disc;
+}
+
+.task-card {
+  @apply flex flex-row justify-between;
+}
+
+.task-card p {
+  @apply text-center w-1/5;
+}
