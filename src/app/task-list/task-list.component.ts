@@ -4,6 +4,7 @@ import {TaskModel} from "../task.model";
 import {AsyncPipe} from "@angular/common";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {TaskService} from "../task.service";
+import {JsonStructureModel} from "../json-structure.model";
 
 @Component({
   selector: 'app-task-list',
@@ -25,7 +26,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.taskService.loadInitialTasks()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(response => {
+      .subscribe((response: JsonStructureModel) => {
         const tasks = response.data.tasks;
         this.taskService.taskSubject.next(tasks);
       });

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TaskModel} from "./task.model";
 import {BehaviorSubject, Observable} from "rxjs";
+import {JsonStructureModel} from "./json-structure.model";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class TaskService {
   constructor(private http: HttpClient) {
   }
 
-  loadInitialTasks(): Observable<{ data: { tasks: TaskModel[] } }> {
+  loadInitialTasks(): Observable<JsonStructureModel> {
     return this.http.get<{ data: { tasks: TaskModel[] } }>(this.FILE_PATH);
   }
 

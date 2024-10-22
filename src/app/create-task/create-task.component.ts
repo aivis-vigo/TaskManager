@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TaskModel} from "../task.model";
 import {NgClass} from "@angular/common";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
@@ -33,23 +33,23 @@ export class CreateTaskComponent {
     this.currentTask.reset();
   }
 
-  get title() {
-    return this.currentTask.get('title')!;
+  get title(): AbstractControl {
+    return <AbstractControl<string, string>>this.currentTask.get('title');
   }
 
-  get description() {
-    return this.currentTask.get('description')!;
+  get description(): AbstractControl {
+    return <AbstractControl<string, string>>this.currentTask.get('description');
   }
 
-  get type() {
-    return this.currentTask.get('type')!;
+  get type(): AbstractControl {
+    return <AbstractControl<string, string>>this.currentTask.get('type');
   }
 
-  get status() {
-    return this.currentTask.get('status')!;
+  get status(): AbstractControl {
+    return <AbstractControl<string, string>>this.currentTask.get('status');
   }
 
-  get createdOn() {
-    return this.currentTask.get('createdOn')!;
+  get createdOn(): AbstractControl {
+    return <AbstractControl<string, string>>this.currentTask.get('createdOn');
   }
 }
