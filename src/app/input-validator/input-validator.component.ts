@@ -8,6 +8,6 @@ import {AbstractControl, FormControl} from "@angular/forms";
   styleUrl: './input-validator.component.scss'
 })
 export class InputValidatorComponent {
-  @Input() property: AbstractControl = new FormControl('');
+  @Input() property: AbstractControl | null = new FormControl('');
   @Input() minLength: number = 0;
 }
