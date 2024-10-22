@@ -1,11 +1,11 @@
 @if (property?.invalid && property?.touched) {
   <div class="error-message">
-    @if (property?.hasError('required')) {
+    @if (isInvalid) {
       <p>
         Field required.
       </p>
     }
-    @if (property?.hasError('minlength')) {
+    @if (hasMinLengthError) {
       <p>
         Field must be at least {{ minLength }} characters long.
       </p>
