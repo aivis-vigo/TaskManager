@@ -1,0 +1,27 @@
+form {
+  @apply flex flex-col mx-auto items-center w-1/2 py-4 border-2 border-black border-dashed rounded-lg;
+}
+
+.form-layout {
+  @apply grid grid-cols-2 gap-x-4 gap-y-4 mb-4;
+}
+
+div {
+  @apply flex flex-col;
+}
+
+label {
+  @apply mb-1;
+}
+
+input {
+  @apply p-1 rounded-lg;
+}
+
+.enabled-button {
+  @apply w-36 py-2 bg-blue-500 mt-4 rounded-lg;
+}
+
+.disabled-button {
+  @apply w-36 py-2 bg-gray-500 mt-4 rounded-lg cursor-not-allowed;
+}

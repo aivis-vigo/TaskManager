@@ -1,0 +1,39 @@
+<form [formGroup]="currentTask" (ngSubmit)="onSubmit()">
+
+  <div class="form-layout">
+    <div>
+      <label for="title">Title:</label>
+      <input id="title" type="text" formControlName="title" required>
+      <app-input-validator [property]="title" [minLength]="5"></app-input-validator>
+    </div>
+
+    <div>
+      <label for="description">Description:</label>
+      <input id="description" type="text" formControlName="description" required>
+      <app-input-validator [property]="description" [minLength]="10"></app-input-validator>
+    </div>
+
+    <div>
+      <label for="type">Type:</label>
+      <input id="type" type="text" formControlName="type" required>
+      <app-input-validator [property]="type"></app-input-validator>
+    </div>
+
+    <div>
+      <label for="status">Status:</label>
+      <input id="status" type="text" formControlName="status" required>
+    </div>
+    <app-input-validator [property]="status"></app-input-validator>
+  </div>
+
+  <div>
+    <label for="createdOn">Created On:</label>
+    <input id="createdOn" type="text" formControlName="createdOn" required>
+    <app-input-validator [property]="createdOn"></app-input-validator>
+  </div>
+
+  <button [ngClass]="{'enabled-button': currentTask.valid, 'disabled-button':!currentTask.valid}"
+          [disabled]="!currentTask.valid" type="submit">Submit
+  </button>
+
+</form>
