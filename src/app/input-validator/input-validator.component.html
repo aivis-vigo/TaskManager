@@ -1,14 +1,16 @@
-@if (isInvalid) {
-  <div class="error-message">
-    @if (isInvalid) {
-      <p>
-        Field required.
-      </p>
-    }
-    @if (hasMinLengthError) {
-      <p>
-        Field must be at least {{ minLength }} characters long.
-      </p>
-    }
-  </div>
+@if (property !== null) {
+  @if (isInvalid) {
+    <div class="error-message">
+      @if (isInvalid) {
+        <p>
+          Field required.
+        </p>
+      }
+      @if (hasMinLengthError) {
+        <p>
+          Field must be at least {{ minLength }} characters long.
+        </p>
+      }
+    </div>
+  }
 }

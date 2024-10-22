@@ -12,10 +12,10 @@ export class InputValidatorComponent {
   @Input() minLength: number = 0;
 
   get isInvalid(): boolean {
-    return this.property?.invalid && this.property?.touched || false;
+    return (this.property?.invalid && this.property?.touched) ?? false;
   }
 
   get hasMinLengthError(): boolean {
-    return this.property?.hasError('minlength') && this.minLength > 0 || false;
+    return (this.property?.hasError('minlength') && this.minLength > 0) ?? false;
   }
 }
