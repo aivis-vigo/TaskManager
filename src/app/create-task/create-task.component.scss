@@ -25,7 +25,3 @@ input {
 .disabled-button {
   @apply w-36 py-2 bg-gray-500 mt-4 rounded-lg cursor-not-allowed;
 }
-
-.error-message {
-  @apply text-red-500;
-}

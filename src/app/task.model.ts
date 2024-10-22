@@ -1,4 +1,4 @@
-export interface Task {
+export interface TaskModel {
   title: string,
   description: string,
   type: string,

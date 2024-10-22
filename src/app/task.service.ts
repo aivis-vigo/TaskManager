@@ -1,33 +1,24 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Task} from "./task";
-import {BehaviorSubject} from "rxjs";
+import {TaskModel} from "./task.model";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private taskSubject = new BehaviorSubject<Task[]>([]);
+  taskSubject = new BehaviorSubject<TaskModel[]>([]);
   tasks$ = this.taskSubject.asObservable();
   FILE_PATH: string = '../../assets/dummy-tasks.json';
 
   constructor(private http: HttpClient) {
-    this.loadInitialTasks();
   }
 
-  loadInitialTasks(): void {
-    this.http.get<{ data: { tasks: Task[] } }>(this.FILE_PATH)
-      .subscribe(response => {
-        const tasks = response.data.tasks;
-        this.taskSubject.next(tasks);
-      })
+  loadInitialTasks(): Observable<{ data: { tasks: TaskModel[] } }> {
+    return this.http.get<{ data: { tasks: TaskModel[] } }>(this.FILE_PATH);
   }
 
-  getTasks() {
-    return this.tasks$;
-  }
-
-  addTask(newTask: Task): void {
+  addTask(newTask: TaskModel): void {
     const tasks = this.taskSubject.getValue();
     this.taskSubject.next([...tasks, newTask]);
   }
