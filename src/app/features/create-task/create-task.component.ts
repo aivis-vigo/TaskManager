@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {TaskModel} from "../task.model";
+import {TaskModel} from "../../shared/task.model";
 import {NgClass} from "@angular/common";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
 
@@ -10,7 +10,7 @@ import {InputValidatorComponent} from "../input-validator/input-validator.compon
   imports: [
     ReactiveFormsModule,
     NgClass,
-    InputValidatorComponent
+    InputValidatorComponent,
   ],
   templateUrl: './create-task.component.html',
   styleUrl: './create-task.component.scss'

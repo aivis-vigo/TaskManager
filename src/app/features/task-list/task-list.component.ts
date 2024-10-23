@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CreateTaskComponent} from "../create-task/create-task.component";
-import {TaskModel} from "../task.model";
 import {AsyncPipe} from "@angular/common";
 import {Observable, Subject, takeUntil} from "rxjs";
-import {TaskService} from "../task.service";
-import {JsonStructureModel} from "../json-structure.model";
+import {TaskService} from "../../services/task.service";
+import {TaskModel} from "../../shared/task.model";
+import {JsonStructureModel} from "../../shared/json-structure.model";
 
 @Component({
   selector: 'app-task-list',
@@ -33,6 +33,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   addTask(newTask: TaskModel): void {
+    console.log(this.taskService.tasks$);
     this.taskService.addTask(newTask);
   }
 
