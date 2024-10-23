@@ -1,5 +1,5 @@
 @if (property) {
-  @if ((this.property.invalid && this.property.touched) ?? false) {
+  @if (this.property.invalid && this.property.touched) {
     <div class="error-message">
       @if (property.hasError('required')) {
         <p>
