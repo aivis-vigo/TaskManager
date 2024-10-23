@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {TaskModel} from "./task.model";
+import {TaskModel} from "../shared/task.model";
 import {BehaviorSubject, Observable} from "rxjs";
-import {JsonStructureModel} from "./json-structure.model";
+import {JsonStructureModel} from "../shared/json-structure.model";
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +10,13 @@ import {JsonStructureModel} from "./json-structure.model";
 export class TaskService {
   taskSubject = new BehaviorSubject<TaskModel[]>([]);
   tasks$ = this.taskSubject.asObservable();
-  FILE_PATH: string = '../../assets/dummy-tasks.json';
+  FILE_PATH: string = '../../../assets/dummy-tasks.json';
 
   constructor(private http: HttpClient) {
   }
 
   loadInitialTasks(): Observable<JsonStructureModel> {
-    return this.http.get<{ data: { tasks: TaskModel[] } }>(this.FILE_PATH);
+    return this.http.get<JsonStructureModel>(this.FILE_PATH);
   }
 
   addTask(newTask: TaskModel): void {
