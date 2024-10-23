@@ -13,7 +13,7 @@ export const routes: Routes = [
   },
   {
     path: 'task-list/:id',
-    title: 'TODO - List',
+    title: 'TODO - Details',
     loadComponent: () => import('./features/task-details/task-details.component').then(c => c.TaskDetailsComponent)
   },
   {path: '', redirectTo: '/create-task', pathMatch: 'full'},
