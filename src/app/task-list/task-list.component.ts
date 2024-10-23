@@ -1,32 +1,38 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CreateTaskComponent} from "../create-task/create-task.component";
-import {Task} from "../task";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
-import {Observable} from "rxjs";
+import {TaskModel} from "../task.model";
+import {AsyncPipe} from "@angular/common";
+import {Observable, Subject, takeUntil} from "rxjs";
 import {TaskService} from "../task.service";
+import {JsonStructureModel} from "../json-structure.model";
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
   imports: [
     CreateTaskComponent,
-    NgIf,
-    NgForOf,
     AsyncPipe
   ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
 })
-export class TaskListComponent implements OnInit {
-  tasks$!: Observable<Task[]>;
+export class TaskListComponent implements OnInit, OnDestroy {
+  tasks$: Observable<TaskModel[]> = this.taskService.tasks$;
+  destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private taskService: TaskService) {}
-
-  ngOnInit(): void {
-    this.tasks$ = this.taskService.getTasks();
+  constructor(private taskService: TaskService) {
   }
 
-  addTask(newTask: Task): void {
+  ngOnInit(): void {
+    this.taskService.loadInitialTasks()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: JsonStructureModel) => {
+        const tasks = response.data.tasks;
+        this.taskService.taskSubject.next(tasks);
+      });
+  }
+
+  addTask(newTask: TaskModel): void {
     this.taskService.addTask(newTask);
   }
 
@@ -34,7 +40,8 @@ export class TaskListComponent implements OnInit {
     this.taskService.removeTask(taskId);
   }
 
-  trackByIndex(index: number, task: Task): number {
-    return index;
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -4,60 +4,36 @@
     <div>
       <label for="title">Title:</label>
       <input id="title" type="text" formControlName="title" required>
-      <div *ngIf="title?.invalid && title?.touched" class="error-message">
-        <p *ngIf="title?.hasError('required')">
-          Field required.
-        </p>
-        <p *ngIf="title?.hasError('minlength')">
-          Field must be at least 5 characters long.
-        </p>
-      </div>
+      <app-input-validator [property]="title" [minLength]="5"></app-input-validator>
     </div>
 
     <div>
       <label for="description">Description:</label>
       <input id="description" type="text" formControlName="description" required>
-      <div *ngIf="description?.invalid && description?.touched" class="error-message">
-        <p *ngIf="description?.hasError('required')">
-          Field required.
-        </p>
-        <p *ngIf="description?.hasError('minlength')">
-          Field must be at least 10 characters long.
-        </p>
-      </div>
+      <app-input-validator [property]="description" [minLength]="10"></app-input-validator>
     </div>
 
     <div>
       <label for="type">Type:</label>
       <input id="type" type="text" formControlName="type" required>
-      <div *ngIf="type?.invalid && type?.touched" class="error-message">
-        <p *ngIf="type?.hasError('required')">
-          Field required.
-        </p>
-      </div>
+      <app-input-validator [property]="type"></app-input-validator>
     </div>
 
     <div>
       <label for="status">Status:</label>
       <input id="status" type="text" formControlName="status" required>
     </div>
-    <div *ngIf="status?.invalid && status?.touched" class="error-message">
-      <p *ngIf="status?.hasError('required')">
-        Field required.
-      </p>
-    </div>
+    <app-input-validator [property]="status"></app-input-validator>
   </div>
 
   <div>
     <label for="createdOn">Created On:</label>
     <input id="createdOn" type="text" formControlName="createdOn" required>
-    <div *ngIf="createdOn?.invalid && createdOn?.touched" class="error-message">
-      <p *ngIf="createdOn?.hasError('required')">
-        Field required.
-      </p>
-    </div>
+    <app-input-validator [property]="createdOn"></app-input-validator>
   </div>
 
-  <button [ngClass]="{'enabled-button': currentTask.valid, 'disabled-button':!currentTask.valid}" [disabled]="!currentTask.valid" type="submit">Submit</button>
+  <button [ngClass]="{'enabled-button': currentTask.valid, 'disabled-button':!currentTask.valid}"
+          [disabled]="!currentTask.valid" type="submit">Submit
+  </button>
 
 </form>
