@@ -1,6 +1,4 @@
 <div class="list-container">
-  <app-create-task (addTaskEvent)="addTask($event)"></app-create-task>
-
   @if (tasks$) {
     <ul>
       @for (task of tasks$ | async; track task; let idx = $index) {

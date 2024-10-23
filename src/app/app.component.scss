@@ -1,3 +1,7 @@
 .active {
   @apply text-blue-500;
 }
+
+ul {
+  @apply flex flex-row space-x-4;
+}
