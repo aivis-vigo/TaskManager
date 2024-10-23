@@ -29,4 +29,9 @@ export class TaskService {
     tasks.splice(taskId, 1);
     this.taskSubject.next([...tasks]);
   }
+
+  getTask(taskId: number): TaskModel {
+    const tasks = this.taskSubject.getValue();
+    return tasks[taskId];
+  }
 }
