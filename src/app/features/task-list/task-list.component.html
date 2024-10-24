@@ -4,7 +4,7 @@
       @for (task of taskService.tasks$ | async; track task; let idx = $index) {
         <li>
           <div class="task-card">
-            <p (click)="viewTask()">{{ task.title }}</p>
+            <p (click)="viewTask(task.id)">{{ task.title }}</p>
             <p>{{ task.description }}</p>
             <p>{{ task.type }}</p>
             <p>{{ task.createdOn }}</p>

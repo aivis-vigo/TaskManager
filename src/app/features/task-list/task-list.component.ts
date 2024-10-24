@@ -4,8 +4,7 @@ import {AsyncPipe} from "@angular/common";
 import {Subject, takeUntil} from "rxjs";
 import {TaskService} from "../../services/task.service";
 import {JsonStructureModel} from "../../shared/json-structure.model";
-import {ActivatedRoute, Router} from "@angular/router";
-import {switchMap} from 'rxjs/operators';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-task-list',
@@ -19,33 +18,26 @@ import {switchMap} from 'rxjs/operators';
 })
 export class TaskListComponent implements OnInit, OnDestroy {
   destroy$: Subject<void> = new Subject<void>();
-  taskId: number = 0;
 
-  constructor(protected taskService: TaskService, private route: ActivatedRoute, private router: Router) {
+  constructor(protected taskService: TaskService, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.taskService.loadInitialTasks()
+    this.taskService
+      .loadInitialTasks()
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: JsonStructureModel) => {
         const tasks = response.data.tasks;
         this.taskService.taskSubject.next(tasks);
       });
-
-    this.route.paramMap.pipe(
-      switchMap(params => {
-        this.taskId = Number(params.get('id'));
-        return this.taskService.tasks$;
-      })
-    );
   }
 
   removeTask(taskId: number): void {
     this.taskService.removeTask(taskId);
   }
 
-  viewTask(): void {
-    this.router.navigate(['/task-list', this.taskId]);
+  viewTask(taskId: number): void {
+    this.router.navigate(['/task-list', taskId]);
   }
 
   ngOnDestroy(): void {
