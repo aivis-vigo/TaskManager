@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TaskModel} from "../shared/task.model";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, first, map, Observable, Subject, takeUntil, tap} from "rxjs";
 import {JsonStructureModel} from "../shared/json-structure.model";
 
 @Injectable({
@@ -13,6 +13,9 @@ export class TaskService {
   FILE_PATH: string = '../../../assets/dummy-tasks.json';
 
   constructor(private http: HttpClient) {
+    this.loadInitialTasks()
+      .pipe(first())
+      .subscribe((res: JsonStructureModel) => this.taskSubject.next(res.data.tasks));
   }
 
   loadInitialTasks(): Observable<JsonStructureModel> {
