@@ -1,10 +1,10 @@
 <div class="list-container">
-  @if (tasks$) {
+  @if (taskService.tasks$) {
     <ul>
-      @for (task of tasks$ | async; track task; let idx = $index) {
+      @for (task of taskService.tasks$ | async; track task; let idx = $index) {
         <li>
           <div class="task-card">
-            <p (click)="viewTask(idx)">{{ task.title }}</p>
+            <p (click)="viewTask()">{{ task.title }}</p>
             <p>{{ task.description }}</p>
             <p>{{ task.type }}</p>
             <p>{{ task.createdOn }}</p>
