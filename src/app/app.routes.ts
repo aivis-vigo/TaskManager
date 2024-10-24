@@ -11,6 +11,11 @@ export const routes: Routes = [
     title: 'TODO - List',
     loadComponent: () => import('./features/task-list/task-list.component').then(c => c.TaskListComponent)
   },
+  {
+    path: 'task-list/:id',
+    title: 'TODO - Details',
+    loadComponent: () => import('./features/task-details/task-details.component').then(c => c.TaskDetailsComponent)
+  },
   {path: '', redirectTo: '/create-task', pathMatch: 'full'},
   {
     path: '**',

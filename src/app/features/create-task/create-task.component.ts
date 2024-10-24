@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {TaskModel} from "../../shared/task.model";
 import {NgClass} from "@angular/common";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
+import {TaskService} from "../../services/task.service";
 
 @Component({
   selector: 'app-create-task',
@@ -18,6 +19,7 @@ import {InputValidatorComponent} from "../input-validator/input-validator.compon
 export class CreateTaskComponent {
   @Output() addTaskEvent: EventEmitter<TaskModel> = new EventEmitter<TaskModel>();
   currentTask: FormGroup = this.fb.group({
+    id: [this.taskService.taskSubject.getValue().length + 1],
     title: ['', [Validators.required, Validators.minLength(5)]],
     description: ['', [Validators.required, Validators.minLength(10)]],
     type: ['', [Validators.required]],
@@ -25,7 +27,7 @@ export class CreateTaskComponent {
     createdOn: ['', [Validators.required]],
   });
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private taskService: TaskService) {
   }
 
   onSubmit(): void {
