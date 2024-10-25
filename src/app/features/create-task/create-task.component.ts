@@ -17,7 +17,6 @@ import {TaskService} from "../../services/task.service";
   styleUrl: './create-task.component.scss'
 })
 export class CreateTaskComponent {
-  @Output() addTaskEvent: EventEmitter<TaskModel> = new EventEmitter<TaskModel>();
   currentTask: FormGroup = this.fb.group({
     id: [this.taskService.taskSubject.getValue().length + 1],
     title: ['', [Validators.required, Validators.minLength(5)]],
@@ -31,7 +30,7 @@ export class CreateTaskComponent {
   }
 
   onSubmit(): void {
-    this.addTaskEvent.emit(this.currentTask.value);
+    this.taskService.addTask(this.currentTask.value);
     this.currentTask.reset();
   }
 
