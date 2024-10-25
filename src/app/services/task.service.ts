@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TaskModel} from "../shared/task.model";
-import {BehaviorSubject, first, Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {JsonStructureModel} from "../shared/json-structure.model";
 
 @Injectable({
@@ -30,8 +30,8 @@ export class TaskService {
     this.taskSubject.next([...tasks]);
   }
 
-  getTask(taskId: number): TaskModel {
+  getTask(taskId: number): TaskModel | undefined {
     const tasks = this.taskSubject.getValue();
-    return <TaskModel>tasks.find(task => task.id === taskId);
+    return tasks.find(task => task.id === taskId);
   }
 }
