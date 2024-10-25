@@ -1,7 +1,7 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TaskModel} from "../shared/task.model";
-import {BehaviorSubject, first, map, Observable, Subject, takeUntil, tap} from "rxjs";
+import {BehaviorSubject, first, Observable} from "rxjs";
 import {JsonStructureModel} from "../shared/json-structure.model";
 
 @Injectable({
