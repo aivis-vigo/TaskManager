@@ -29,4 +29,9 @@ export class TaskService {
     tasks.splice(taskId, 1);
     this.taskSubject.next([...tasks]);
   }
+
+  getTask(taskId: number): TaskModel | undefined {
+    const tasks = this.taskSubject.getValue();
+    return tasks.find(task => task.id === taskId);
+  }
 }
