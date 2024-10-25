@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {TaskModel} from "../../shared/task.model";
 import {TaskService} from "../../services/task.service";
 
@@ -14,7 +14,7 @@ export class TaskDetailsComponent implements OnInit {
   task: TaskModel = <TaskModel>{};
   errorMessage: string = '';
 
-  constructor(private taskService: TaskService, private route: ActivatedRoute, private router: Router) {
+  constructor(private taskService: TaskService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
