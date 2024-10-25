@@ -1,0 +1,13 @@
+@if (task) {
+  <div class="task-card">
+    <p>{{ task.title }}</p>
+    <p>{{ task.description }}</p>
+    <p>{{ task.type }}</p>
+    <p>{{ task.createdOn }}</p>
+    <p>{{ task.status }}</p>
+  </div>
+}
+
+@if (errorMessage) {
+  <div>{{errorMessage}}</div>
+}

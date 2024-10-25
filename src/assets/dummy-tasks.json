@@ -2,6 +2,7 @@
   "data": {
     "tasks": [
       {
+        "id": 1,
         "title": "Morning workout",
         "description": "5km run",
         "type": "Urgent",
@@ -9,6 +10,7 @@
         "status": "In progress"
       },
       {
+        "id": 2,
         "title": "Groceries",
         "description": "3x apples, 5l milk, watermelon",
         "type": "Urgent",
@@ -16,6 +18,7 @@
         "status": "Done"
       },
       {
+        "id": 3,
         "title": "Take out the trash",
         "description": "was needed to be done yesterday",
         "type": "Urgent",
