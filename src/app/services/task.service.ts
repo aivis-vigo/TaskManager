@@ -17,8 +17,8 @@ export class TaskService {
       .subscribe((res) => this.taskSubject.next(res));
   }
 
-  loadInitialTasks(): Observable<any> {
-    return this.http.get(this.TASK_ENDPOINT);
+  loadInitialTasks(): Observable<TaskModel[]> {
+    return this.http.get<TaskModel[]>(this.TASK_ENDPOINT);
   }
 
   addTask(newTask: TaskModel): void {
