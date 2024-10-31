@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TaskModel} from "../shared/task.model";
 import {BehaviorSubject, first, Observable} from "rxjs";
+import {localEnvironment} from "../environments/local";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,6 @@ import {BehaviorSubject, first, Observable} from "rxjs";
 export class TaskService {
   taskSubject = new BehaviorSubject<TaskModel[]>([]);
   tasks$: Observable<TaskModel[]> = this.taskSubject.asObservable();
-  TASK_ENDPOINT: string = 'http://localhost:5050/tasks';
 
   constructor(private http: HttpClient) {
     this.loadInitialTasks()
@@ -18,7 +18,7 @@ export class TaskService {
   }
 
   loadInitialTasks(): Observable<TaskModel[]> {
-    return this.http.get<TaskModel[]>(this.TASK_ENDPOINT);
+    return this.http.get<TaskModel[]>(`${localEnvironment.apiEndpoint}/tasks`);
   }
 
   addTask(newTask: TaskModel): void {
