@@ -1,6 +1,5 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {TaskModel} from "../../shared/task.model";
 import {NgClass} from "@angular/common";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
 import {TaskService} from "../../services/task.service";
