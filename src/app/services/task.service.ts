@@ -2,24 +2,23 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TaskModel} from "../shared/task.model";
 import {BehaviorSubject, first, Observable} from "rxjs";
-import {JsonStructureModel} from "../shared/json-structure.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
   taskSubject = new BehaviorSubject<TaskModel[]>([]);
-  tasks$ = this.taskSubject.asObservable();
-  FILE_PATH: string = '../../../assets/dummy-tasks.json';
+  tasks$: Observable<TaskModel[]> = this.taskSubject.asObservable();
+  TASK_ENDPOINT: string = 'http://localhost:5050/tasks';
 
   constructor(private http: HttpClient) {
     this.loadInitialTasks()
       .pipe(first())
-      .subscribe((res: JsonStructureModel) => this.taskSubject.next(res.data.tasks));
+      .subscribe((res) => this.taskSubject.next(res));
   }
 
-  loadInitialTasks(): Observable<JsonStructureModel> {
-    return this.http.get<JsonStructureModel>(this.FILE_PATH);
+  loadInitialTasks(): Observable<any> {
+    return this.http.get(this.TASK_ENDPOINT);
   }
 
   addTask(newTask: TaskModel): void {
@@ -35,6 +34,6 @@ export class TaskService {
 
   getTask(taskId: number): TaskModel | undefined {
     const tasks = this.taskSubject.getValue();
-    return tasks.find(task => task.id === taskId);
+    return tasks.find((task: TaskModel) => task.id === taskId);
   }
 }
