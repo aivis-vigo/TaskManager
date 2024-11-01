@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TaskModel} from "../shared/task.model";
 import {BehaviorSubject, first, Observable} from "rxjs";
-import {localEnvironment} from "../environments/local";
+import {environment} from "../../environments/enviornment";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class TaskService {
   }
 
   loadInitialTasks(): Observable<TaskModel[]> {
-    return this.http.get<TaskModel[]>(`${localEnvironment.apiEndpoint}/tasks`);
+    return this.http.get<TaskModel[]>(`${environment.apiEndpoint}/tasks`);
   }
 
   addTask(newTask: TaskModel): void {
