@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TaskModel} from "../../shared/task.model";
 import {TaskService} from "../../services/task.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-task-details',
@@ -18,10 +19,10 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const taskId = Number(this.route.snapshot.paramMap.get('id'));
-    const fetchedTask = this.taskService.getTask(taskId);
+    const taskId: number = Number(this.route.snapshot.paramMap.get('id'));
+    const fetchedTask: Observable<TaskModel> = this.taskService.getTask(taskId);
     if (fetchedTask) {
-      this.task = fetchedTask;
+      fetchedTask.subscribe((res: TaskModel) => this.task = res);
     } else {
       this.errorMessage = `Failed to fetch task with id: ${taskId}`;
     }
