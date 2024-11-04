@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgClass} from "@angular/common";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
 import {TaskService} from "../../services/task.service";
-import {TaskModel} from "../../shared/task.model";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-create-task',
@@ -16,7 +16,7 @@ import {TaskModel} from "../../shared/task.model";
   templateUrl: './create-task.component.html',
   styleUrl: './create-task.component.scss'
 })
-export class CreateTaskComponent {
+export class CreateTaskComponent implements OnDestroy {
   currentTask: FormGroup = this.fb.group({
     id: [this.taskService.taskSubject.getValue().length + 1],
     title: ['', [Validators.required, Validators.minLength(5)]],
@@ -25,12 +25,15 @@ export class CreateTaskComponent {
     status: ['', [Validators.required]],
     createdOn: ['', [Validators.required]],
   });
+  private ngUnsubscribe: Subject<void> = new Subject();
 
   constructor(private fb: FormBuilder, private taskService: TaskService) {
   }
 
   onSubmit(): void {
-    this.taskService.addTask(this.currentTask.value).subscribe();
+    this.taskService.addTask(this.currentTask.value)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe();
     this.currentTask.reset();
   }
 
@@ -52,5 +55,10 @@ export class CreateTaskComponent {
 
   get createdOn() {
     return this.currentTask.get('createdOn');
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
