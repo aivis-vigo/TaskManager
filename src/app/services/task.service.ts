@@ -3,19 +3,18 @@ import {HttpClient} from "@angular/common/http";
 import {TaskModel} from "../shared/task.model";
 import {BehaviorSubject, first, Observable} from "rxjs";
 import {environment} from "../../environments/enviornment";
-import {Task} from "zone.js/lib/zone-impl";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  taskSubject = new BehaviorSubject<TaskModel[]>([]);
+  taskSubject: BehaviorSubject<TaskModel[]> = new BehaviorSubject<TaskModel[]>([]);
   tasks$: Observable<TaskModel[]> = this.taskSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.loadInitialTasks()
       .pipe(first())
-      .subscribe((res) => this.taskSubject.next(res));
+      .subscribe((res: TaskModel[]) => this.taskSubject.next(res));
   }
 
   loadInitialTasks(): Observable<TaskModel[]> {
@@ -24,7 +23,12 @@ export class TaskService {
 
   addTask(newTask: TaskModel): void {
     const tasks = this.taskSubject.getValue();
-    this.taskSubject.next([...tasks, newTask]);
+
+    this.http.post(`${environment.apiEndpoint}/tasks`, newTask)
+      .subscribe(res => {
+        const task = Array.isArray(res) ? res[0] : res;
+        this.taskSubject.next([...tasks, task]);
+      });
   }
 
   removeTask(taskId: number): void {
