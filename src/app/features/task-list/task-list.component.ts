@@ -16,7 +16,7 @@ import {Router} from "@angular/router";
   styleUrl: './task-list.component.scss'
 })
 export class TaskListComponent implements OnDestroy {
-  destroy$: Subject<void> = new Subject<void>();
+  ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(protected taskService: TaskService, private router: Router) {
   }
@@ -30,7 +30,7 @@ export class TaskListComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
