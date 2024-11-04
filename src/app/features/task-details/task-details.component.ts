@@ -14,7 +14,7 @@ import {Observable, Subject, takeUntil} from "rxjs";
 export class TaskDetailsComponent implements OnInit, OnDestroy {
   task: TaskModel = <TaskModel>{};
   errorMessage: string = '';
-  private destroy$: Subject<void> = new Subject<void>();
+  private ngUnsubscribe: Subject<void> = new Subject();
 
   constructor(private taskService: TaskService, private route: ActivatedRoute) {
   }
@@ -24,7 +24,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
     const fetchedTask: Observable<TaskModel> = this.taskService.getTask(taskId);
     if (fetchedTask) {
       fetchedTask
-        .pipe(takeUntil(this.destroy$))
+        .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((res: TaskModel) => this.task = res);
     } else {
       this.errorMessage = `Failed to fetch task with id: ${taskId}`;
@@ -32,7 +32,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
