@@ -24,10 +24,9 @@ export class TaskService {
   addTask(newTask: TaskModel): void {
     const tasks = this.taskSubject.getValue();
 
-    this.http.post(`${environment.apiEndpoint}/tasks`, newTask)
-      .subscribe(res => {
-        const task = Array.isArray(res) ? res[0] : res;
-        this.taskSubject.next([...tasks, task]);
+    this.http.post<TaskModel>(`${environment.apiEndpoint}/tasks`, newTask)
+      .subscribe((res: TaskModel) => {
+        this.taskSubject.next([...tasks, res]);
       });
   }
 
