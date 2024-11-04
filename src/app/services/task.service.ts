@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {TaskModel} from "../shared/task.model";
 import {BehaviorSubject, first, Observable} from "rxjs";
 import {environment} from "../../environments/enviornment";
+import {Task} from "zone.js/lib/zone-impl";
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +33,7 @@ export class TaskService {
     this.taskSubject.next([...tasks]);
   }
 
-  getTask(taskId: number): TaskModel | undefined {
-    const tasks = this.taskSubject.getValue();
-    return tasks.find((task: TaskModel) => task.id === taskId);
+  getTask(taskId: number): Observable<TaskModel> {
+    return this.http.get<TaskModel>(`${environment.apiEndpoint}/tasks/${taskId}`);
   }
 }
