@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {NgClass} from "@angular/common";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
 import {TaskService} from "../../services/task.service";
+import {TaskModel} from "../../shared/task.model";
 
 @Component({
   selector: 'app-create-task',
@@ -29,7 +30,7 @@ export class CreateTaskComponent {
   }
 
   onSubmit(): void {
-    this.taskService.addTask(this.currentTask.value);
+    this.taskService.addTask(this.currentTask.value).subscribe();
     this.currentTask.reset();
   }
 

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TaskModel} from "../shared/task.model";
-import {BehaviorSubject, first, Observable} from "rxjs";
+import {BehaviorSubject, first, Observable, tap} from "rxjs";
 import {environment} from "../../environments/enviornment";
 
 @Injectable({
@@ -21,13 +21,12 @@ export class TaskService {
     return this.http.get<TaskModel[]>(`${environment.apiEndpoint}/tasks`);
   }
 
-  addTask(newTask: TaskModel): void {
-    const tasks = this.taskSubject.getValue();
-
-    this.http.post<TaskModel>(`${environment.apiEndpoint}/tasks`, newTask)
-      .subscribe((res: TaskModel) => {
-        this.taskSubject.next([...tasks, res]);
-      });
+  addTask(newTask: TaskModel): Observable<TaskModel> {
+    return this.http.post<TaskModel>(`${environment.apiEndpoint}/tasks`, newTask)
+      .pipe(tap((res: TaskModel) => {
+        const tasks = this.taskSubject.getValue();
+        this.taskSubject.next([...tasks, res])
+      }));
   }
 
   removeTask(taskId: number): void {
