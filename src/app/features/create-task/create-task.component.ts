@@ -24,14 +24,14 @@ export class CreateTaskComponent implements OnDestroy {
     status: ['', [Validators.required]],
     createdOn: ['', [Validators.required]],
   });
-  private ngUnsubscribe: Subject<void> = new Subject();
+  private destroy: Subject<void> = new Subject();
 
   constructor(private fb: FormBuilder, private taskService: TaskService) {
   }
 
   onSubmit(): void {
     this.taskService.addTask(this.currentTask.value)
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.destroy))
       .subscribe();
     this.currentTask.reset();
   }
@@ -57,7 +57,7 @@ export class CreateTaskComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.destroy.next();
+    this.destroy.complete();
   }
 }

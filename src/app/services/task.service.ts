@@ -4,18 +4,19 @@ import {TaskModel} from "../shared/task.model";
 import {BehaviorSubject, first, Observable, tap} from "rxjs";
 import {environment} from "../../environments/enviornment";
 import {DeleteResponseModel} from "../shared/delete-response.model";
+import {TaskDetailsComponent} from "../features/task-details/task-details.component";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  taskSubject = new BehaviorSubject<TaskModel[]>([]);
+  taskSubject: BehaviorSubject<TaskModel[]> = new BehaviorSubject<TaskModel[]>([]);
   tasks$: Observable<TaskModel[]> = this.taskSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.loadInitialTasks()
       .pipe(first())
-      .subscribe((res) => this.taskSubject.next(res));
+      .subscribe((res: TaskModel[]) => this.taskSubject.next(res));
   }
 
   loadInitialTasks(): Observable<TaskModel[]> {
@@ -30,12 +31,10 @@ export class TaskService {
       }));
   }
 
-  removeTask(taskId: string): Observable<DeleteResponseModel> {
-    return this.http.delete<DeleteResponseModel>(`${environment.apiEndpoint}/tasks/${taskId}`)
-      .pipe(tap((): void => {
-        const tasks: TaskModel[] = this.taskSubject.getValue();
-        const filteredTasks: TaskModel[] = tasks.filter((task: TaskModel) => task._id !== taskId);
-        this.taskSubject.next(filteredTasks);
+  removeTask(taskId: string): Observable<TaskModel[]> {
+    return this.http.delete<TaskModel[]>(`${environment.apiEndpoint}/tasks/${taskId}`)
+      .pipe(tap((res: TaskModel[]): void => {
+        this.taskSubject.next(res);
       }));
   }
 

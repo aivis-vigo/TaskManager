@@ -1,7 +1,4 @@
 <div class="list-container">
-  @if (statusMessage) {
-    <div>{{statusMessage}}</div>
-  }
   @if (taskService.tasks$) {
     <ul>
       @for (task of taskService.tasks$ | async; track task) {

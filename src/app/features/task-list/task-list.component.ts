@@ -1,10 +1,9 @@
 import {Component, OnDestroy} from '@angular/core';
 import {CreateTaskComponent} from "../create-task/create-task.component";
 import {AsyncPipe} from "@angular/common";
-import {Observable, Subject, takeUntil} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {TaskService} from "../../services/task.service";
 import {Router} from "@angular/router";
-import {DeleteResponseModel} from "../../shared/delete-response.model";
 
 @Component({
   selector: 'app-task-list',
@@ -17,16 +16,15 @@ import {DeleteResponseModel} from "../../shared/delete-response.model";
   styleUrl: './task-list.component.scss'
 })
 export class TaskListComponent implements OnDestroy {
-  ngUnsubscribe: Subject<void> = new Subject<void>();
-  statusMessage: string = '';
+  destroy: Subject<void> = new Subject<void>();
 
   constructor(protected taskService: TaskService, private router: Router) {
   }
 
   removeTask(taskId: string): void {
     this.taskService.removeTask(taskId)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((res: DeleteResponseModel) => this.statusMessage = res.message);
+      .pipe(takeUntil(this.destroy))
+      .subscribe();
   }
 
   viewTask(taskId: string): void {
@@ -34,7 +32,7 @@ export class TaskListComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.destroy.next();
+    this.destroy.complete();
   }
 }
