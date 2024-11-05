@@ -3,8 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {TaskModel} from "../shared/task.model";
 import {BehaviorSubject, first, Observable, tap} from "rxjs";
 import {environment} from "../../environments/enviornment";
-import {DeleteResponseModel} from "../shared/delete-response.model";
-import {TaskDetailsComponent} from "../features/task-details/task-details.component";
 
 @Injectable({
   providedIn: 'root'
