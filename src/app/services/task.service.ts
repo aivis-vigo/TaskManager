@@ -29,13 +29,14 @@ export class TaskService {
       }));
   }
 
-  removeTask(taskId: number): void {
-    const tasks = this.taskSubject.getValue();
-    tasks.splice(taskId, 1);
-    this.taskSubject.next([...tasks]);
+  removeTask(taskId: string): Observable<TaskModel[]> {
+    return this.http.delete<TaskModel[]>(`${environment.apiEndpoint}/tasks/${taskId}`)
+      .pipe(tap((res: TaskModel[]): void => {
+        this.taskSubject.next(res);
+      }));
   }
 
-  getTask(taskId: number): Observable<TaskModel> {
+  getTask(taskId: string): Observable<TaskModel> {
     return this.http.get<TaskModel>(`${environment.apiEndpoint}/tasks/${taskId}`);
   }
 }

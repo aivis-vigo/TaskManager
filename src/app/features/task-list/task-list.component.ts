@@ -1,7 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
 import {CreateTaskComponent} from "../create-task/create-task.component";
 import {AsyncPipe} from "@angular/common";
-import {Subject} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {TaskService} from "../../services/task.service";
 import {Router} from "@angular/router";
 
@@ -16,21 +16,23 @@ import {Router} from "@angular/router";
   styleUrl: './task-list.component.scss'
 })
 export class TaskListComponent implements OnDestroy {
-  ngUnsubscribe: Subject<void> = new Subject<void>();
+  destroy: Subject<void> = new Subject<void>();
 
   constructor(protected taskService: TaskService, private router: Router) {
   }
 
-  removeTask(taskId: number): void {
-    this.taskService.removeTask(taskId);
+  removeTask(taskId: string): void {
+    this.taskService.removeTask(taskId)
+      .pipe(takeUntil(this.destroy))
+      .subscribe();
   }
 
-  viewTask(taskId: number): void {
+  viewTask(taskId: string): void {
     this.router.navigate(['/task-list', taskId]);
   }
 
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.destroy.next();
+    this.destroy.complete();
   }
 }

@@ -1,5 +1,5 @@
 export interface TaskModel {
-  id: number,
+  _id: string;
   title: string,
   description: string,
   type: string,
