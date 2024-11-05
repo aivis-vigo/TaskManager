@@ -20,14 +20,16 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const taskId: number = Number(this.route.snapshot.paramMap.get('id'));
-    const fetchedTask: Observable<TaskModel> = this.taskService.getTask(taskId);
-    if (fetchedTask) {
-      fetchedTask
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe((res: TaskModel) => this.task = res);
-    } else {
-      this.errorMessage = `Failed to fetch task with id: ${taskId}`;
+    const taskId: string | null = this.route.snapshot.paramMap.get('id');
+    if (taskId) {
+      const fetchedTask: Observable<TaskModel> = this.taskService.getTask(taskId);
+      if (fetchedTask) {
+        fetchedTask
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe((res: TaskModel) => this.task = res);
+      } else {
+        this.errorMessage = `Failed to fetch task with id: ${taskId}`;
+      }
     }
   }
 

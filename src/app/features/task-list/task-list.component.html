@@ -1,15 +1,18 @@
 <div class="list-container">
+  @if (statusMessage) {
+    <div>{{statusMessage}}</div>
+  }
   @if (taskService.tasks$) {
     <ul>
-      @for (task of taskService.tasks$ | async; track task; let idx = $index) {
+      @for (task of taskService.tasks$ | async; track task) {
         <li>
           <div class="task-card">
-            <p (click)="viewTask(task.id)">{{ task.title }}</p>
+            <p (click)="viewTask(task._id)">{{ task.title }}</p>
             <p>{{ task.description }}</p>
             <p>{{ task.type }}</p>
             <p>{{ task.createdOn }}</p>
             <p>{{ task.status }}</p>
-            <button (click)="removeTask(idx)">
+            <button (click)="removeTask(task._id)">
               <svg class="h-8 w-8 text-red-500" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z"/>
