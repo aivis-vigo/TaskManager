@@ -21,14 +21,18 @@ export class TaskListComponent implements OnDestroy {
   constructor(protected taskService: TaskService, private router: Router) {
   }
 
+  viewTask(taskId: string): void {
+    this.router.navigate(['/task-list', taskId]);
+  }
+
+  editTask(taskId: string): void {
+    this.router.navigate(['/edit-task', taskId]);
+  }
+
   removeTask(taskId: string): void {
     this.taskService.removeTask(taskId)
       .pipe(takeUntil(this.destroy))
       .subscribe();
-  }
-
-  viewTask(taskId: string): void {
-    this.router.navigate(['/task-list', taskId]);
   }
 
   ngOnDestroy(): void {

@@ -13,8 +13,8 @@ import {Observable, Subject, takeUntil} from "rxjs";
 })
 export class TaskDetailsComponent implements OnInit, OnDestroy {
   task: TaskModel = <TaskModel>{};
-  errorMessage: string = '';
   private destroy: Subject<void> = new Subject();
+  errorMessage: string = '';
 
   constructor(private taskService: TaskService, private route: ActivatedRoute) {
   }

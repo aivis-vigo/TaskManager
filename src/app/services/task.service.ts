@@ -21,6 +21,10 @@ export class TaskService {
     return this.http.get<TaskModel[]>(`${environment.apiEndpoint}/tasks`);
   }
 
+  getTask(taskId: string): Observable<TaskModel> {
+    return this.http.get<TaskModel>(`${environment.apiEndpoint}/tasks/${taskId}`);
+  }
+
   addTask(newTask: TaskModel): Observable<TaskModel> {
     return this.http.post<TaskModel>(`${environment.apiEndpoint}/tasks`, newTask)
       .pipe(tap((res: TaskModel) => {
@@ -29,14 +33,14 @@ export class TaskService {
       }));
   }
 
+  updateTask(taskId: string, updatedTask: TaskModel): Observable<TaskModel> {
+    return this.http.put<TaskModel>(`${environment.apiEndpoint}/tasks/update/${taskId}`, updatedTask);
+  }
+
   removeTask(taskId: string): Observable<TaskModel[]> {
     return this.http.delete<TaskModel[]>(`${environment.apiEndpoint}/tasks/${taskId}`)
       .pipe(tap((res: TaskModel[]): void => {
         this.taskSubject.next(res);
       }));
-  }
-
-  getTask(taskId: string): Observable<TaskModel> {
-    return this.http.get<TaskModel>(`${environment.apiEndpoint}/tasks/${taskId}`);
   }
 }
