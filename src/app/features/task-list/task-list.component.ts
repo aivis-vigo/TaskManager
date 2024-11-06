@@ -4,6 +4,7 @@ import {AsyncPipe} from "@angular/common";
 import {Subject, takeUntil} from "rxjs";
 import {TaskService} from "../../services/task.service";
 import {Router} from "@angular/router";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-task-list',

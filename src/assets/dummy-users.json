@@ -1,0 +1,24 @@
+{
+  "data": {
+    "users": [
+      {
+        "firstName": "John",
+        "lastName": "Doe",
+        "username": "john_doe",
+        "password": "john123"
+      },
+      {
+        "firstName": "Jane",
+        "lastName": "Doe",
+        "username": "jane_doe",
+        "password": "jane123"
+      },
+      {
+        "firstName": "Jake",
+        "lastName": "Doe",
+        "username": "jake_doe",
+        "password": "jake123"
+      }
+    ]
+  }
+}

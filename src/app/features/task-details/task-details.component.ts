@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {TaskModel} from "../../shared/task.model";
 import {TaskService} from "../../services/task.service";
 import {Observable, Subject, takeUntil} from "rxjs";
