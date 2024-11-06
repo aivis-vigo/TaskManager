@@ -25,10 +25,6 @@ export class TaskListComponent implements OnDestroy {
     this.router.navigate(['/task-list', taskId]);
   }
 
-  editTask(taskId: string): void {
-    this.router.navigate(['/edit-task', taskId]);
-  }
-
   removeTask(taskId: string): void {
     this.taskService.removeTask(taskId)
       .pipe(takeUntil(this.destroy))

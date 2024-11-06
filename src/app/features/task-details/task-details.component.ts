@@ -30,7 +30,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
   errorMessage: string = '';
   editMode: boolean = false;
 
-  constructor(private fb: FormBuilder, private taskService: TaskService, private route: ActivatedRoute, private router: Router) {
+  constructor(private fb: FormBuilder, private taskService: TaskService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
