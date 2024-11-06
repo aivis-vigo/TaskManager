@@ -23,6 +23,10 @@ export class UserService {
     return this.http.get<JsonUsersStructureModel>(this.FILE_PATH);
   }
 
+  defaultUsers(): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(`${environment.apiEndpoint}/users`);
+  }
+
   insertDefaultUsers(): Observable<UserModel[]> {
     return this.http.post<UserModel[]>(`${environment.apiEndpoint}/users`, this.userSubject.getValue());
   }

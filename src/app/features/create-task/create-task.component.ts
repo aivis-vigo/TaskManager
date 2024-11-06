@@ -31,6 +31,11 @@ export class CreateTaskComponent implements OnDestroy {
   constructor(protected userService: UserService, private fb: FormBuilder, private taskService: TaskService) {
   }
 
+  defaultUsers() {
+    this.userService.defaultUsers()
+      .subscribe((res: UserModel[]) => console.log(res));
+  }
+
   createUsers() {
     this.userService.insertDefaultUsers()
       .subscribe((res: UserModel[]) => console.log(res));
