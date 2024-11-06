@@ -28,13 +28,7 @@ export class CreateTaskComponent implements OnDestroy {
   });
   private destroy: Subject<void> = new Subject();
 
-  constructor(protected userService: UserService, private fb: FormBuilder, private taskService: TaskService) {
-  }
-
-  defaultUsers(): void {
-    this.userService.loadInitialUsers()
-      .pipe(takeUntil(this.destroy))
-      .subscribe((res: UserModel[]) => console.log(res));
+  constructor(private fb: FormBuilder, private taskService: TaskService) {
   }
 
   onSubmit(): void {
