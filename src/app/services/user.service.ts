@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, first, Observable} from "rxjs";
 import {UserModel} from "../shared/user.model";
-import {JsonUsersStructureModel} from "../shared/json-users-structure.model";
 import {environment} from "../../environments/enviornment";
+
+/* todo: delete word */
 
 @Injectable({
   providedIn: 'root'
@@ -11,24 +12,14 @@ import {environment} from "../../environments/enviornment";
 export class UserService {
   userSubject: BehaviorSubject<UserModel[]> = new BehaviorSubject<UserModel[]>([]);
   users$: Observable<UserModel[]> = this.userSubject.asObservable();
-  FILE_PATH: string = '../../assets/dummy-users.json';
 
   constructor(private http: HttpClient) {
-    this.loadInitialTasks()
+    this.loadInitialUsers()
       .pipe(first())
-      .subscribe((res: JsonUsersStructureModel) => this.userSubject.next(res.data.users));
+      .subscribe((res: UserModel[]) => this.userSubject.next(res));
   }
 
-  loadInitialTasks(): Observable<JsonUsersStructureModel> {
-    return this.http.get<JsonUsersStructureModel>(this.FILE_PATH);
-  }
-
-  defaultUsers(): Observable<UserModel[]> {
+  loadInitialUsers(): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(`${environment.apiEndpoint}/users`);
   }
-
-  insertDefaultUsers(): Observable<UserModel[]> {
-    return this.http.post<UserModel[]>(`${environment.apiEndpoint}/users`, this.userSubject.getValue());
-  }
-
 }

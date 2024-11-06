@@ -32,12 +32,8 @@ export class CreateTaskComponent implements OnDestroy {
   }
 
   defaultUsers(): void {
-    this.userService.defaultUsers()
-      .subscribe((res: UserModel[]) => console.log(res));
-  }
-
-  createUsers(): void {
-    this.userService.insertDefaultUsers()
+    this.userService.loadInitialUsers()
+      .pipe(takeUntil(this.destroy))
       .subscribe((res: UserModel[]) => console.log(res));
   }
 
