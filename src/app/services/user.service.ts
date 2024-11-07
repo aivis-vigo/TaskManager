@@ -4,8 +4,6 @@ import {BehaviorSubject, first, Observable} from "rxjs";
 import {UserModel} from "../shared/user.model";
 import {environment} from "../../environments/enviornment";
 
-/* todo: delete word */
-
 @Injectable({
   providedIn: 'root'
 })

@@ -37,6 +37,19 @@
         <input id="status" type="text" formControlName="status" required>
       </div>
       <app-input-validator [property]="status"></app-input-validator>
+
+      <div>
+        <label for="assignedTo">Assign to:</label>
+        <select id="assignedTo" formControlName="assignedTo">
+          <option value="Unassigned">Unassigned</option>
+          @for (user of userService.users$ | async; track user) {
+            <option [value]="user.username">
+              {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
+            </option>
+          }
+        </select>
+      </div>
+
     </div>
 
     <button [ngClass]="{'enabled-button': currentTask.valid, 'disabled-button':!currentTask.valid}"
@@ -52,6 +65,7 @@
       <p>{{ task.type }}</p>
       <p>{{ task.createdOn }}</p>
       <p>{{ task.status }}</p>
+      <p>{{ task.assignedTo }}</p>
     </div>
   }
 }

@@ -5,7 +5,8 @@ import {TaskService} from "../../services/task.service";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
-import {NgClass} from "@angular/common";
+import {AsyncPipe, NgClass} from "@angular/common";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-task-details',
@@ -13,7 +14,8 @@ import {NgClass} from "@angular/common";
   imports: [
     InputValidatorComponent,
     ReactiveFormsModule,
-    NgClass
+    NgClass,
+    AsyncPipe
   ],
   templateUrl: './task-details.component.html',
   styleUrl: './task-details.component.scss'
@@ -24,13 +26,19 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
     description: ['', [Validators.required, Validators.minLength(10)]],
     type: ['', [Validators.required]],
     status: ['', [Validators.required]],
+    assignedTo: ['', [Validators.required]],
   });
   task: TaskModel = <TaskModel>{};
   private destroy: Subject<void> = new Subject();
   errorMessage: string = '';
   editMode: boolean = false;
 
-  constructor(private fb: FormBuilder, private taskService: TaskService, private route: ActivatedRoute) {
+  constructor(
+    protected userService: UserService,
+    private fb: FormBuilder,
+    private taskService: TaskService,
+    private route: ActivatedRoute
+  ) {
   }
 
   ngOnInit(): void {
@@ -47,6 +55,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
               description: this.task.description,
               type: this.task.type,
               status: this.task.status,
+              assignedTo: this.task.assignedTo,
             });
           });
       } else {
@@ -82,6 +91,14 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
 
   get status() {
     return this.currentTask.get('status');
+  }
+
+  get createdOn() {
+    return this.currentTask.get('createdOn');
+  }
+
+  get assignedTo() {
+    return this.currentTask.get('assignedTo');
   }
 
   ngOnDestroy(): void {
