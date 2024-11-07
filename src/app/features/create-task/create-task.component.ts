@@ -4,6 +4,8 @@ import {NgClass} from "@angular/common";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
 import {TaskService} from "../../services/task.service";
 import {Subject, takeUntil} from "rxjs";
+import {UserService} from "../../services/user.service";
+import {UserModel} from "../../shared/user.model";
 
 @Component({
   selector: 'app-create-task',
