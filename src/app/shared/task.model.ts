@@ -4,5 +4,6 @@ export interface TaskModel {
   description: string,
   type: string,
   createdOn: string,
-  status: string
+  status: string,
+  assignedTo: string
 }

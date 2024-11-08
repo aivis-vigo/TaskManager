@@ -1,11 +1,10 @@
 import {Component, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {NgClass} from "@angular/common";
+import {AsyncPipe, NgClass} from "@angular/common";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
 import {TaskService} from "../../services/task.service";
 import {Subject, takeUntil} from "rxjs";
 import {UserService} from "../../services/user.service";
-import {UserModel} from "../../shared/user.model";
 
 @Component({
   selector: 'app-create-task',
@@ -14,6 +13,7 @@ import {UserModel} from "../../shared/user.model";
     ReactiveFormsModule,
     NgClass,
     InputValidatorComponent,
+    AsyncPipe,
   ],
   templateUrl: './create-task.component.html',
   styleUrl: './create-task.component.scss'
@@ -25,10 +25,15 @@ export class CreateTaskComponent implements OnDestroy {
     type: ['', [Validators.required]],
     status: ['', [Validators.required]],
     createdOn: ['', [Validators.required]],
+    assignedTo: ['Unassigned', [Validators.required]],
   });
   private destroy: Subject<void> = new Subject();
 
-  constructor(private fb: FormBuilder, private taskService: TaskService) {
+  constructor(
+    protected userService: UserService,
+    private fb: FormBuilder,
+    private taskService: TaskService
+  ) {
   }
 
   onSubmit(): void {
@@ -56,6 +61,10 @@ export class CreateTaskComponent implements OnDestroy {
 
   get createdOn() {
     return this.currentTask.get('createdOn');
+  }
+
+  get assignedTo() {
+    return this.currentTask.get('assignedTo');
   }
 
   ngOnDestroy() {

@@ -32,6 +32,18 @@
     <app-input-validator [property]="createdOn"></app-input-validator>
   </div>
 
+  <div>
+    <label for="assignedTo">Assign to:</label>
+    <select id="assignedTo" formControlName="assignedTo">
+      <option value="Unassigned">Unassigned</option>
+      @for (user of userService.users$ | async; track user) {
+        <option [value]="user.username">
+          {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
+        </option>
+      }
+    </select>
+  </div>
+
   <button [ngClass]="{'enabled-button': currentTask.valid, 'disabled-button':!currentTask.valid}"
           [disabled]="!currentTask.valid" type="submit">Submit
   </button>
