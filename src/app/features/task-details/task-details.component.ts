@@ -1,12 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {TaskModel} from "../../shared/task.model";
+import {TaskModel} from "../../shared/models/task.model";
 import {TaskService} from "../../services/task.service";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
 import {AsyncPipe, NgClass} from "@angular/common";
 import {UserService} from "../../services/user.service";
+import {UserModel} from "../../shared/models/user.model";
 
 @Component({
   selector: 'app-task-details',
@@ -62,6 +63,10 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
         this.errorMessage = `Failed to fetch task with id: ${taskId}`;
       }
     }
+
+    this.userService.loadInitialUsers()
+      .pipe(takeUntil(this.destroy))
+      .subscribe((res: UserModel[]) => this.userService.userSubject.next(res));
   }
 
   toggleEditMode(): void {
