@@ -13,7 +13,7 @@ import {AuthorizedUserModel} from "../shared/models/authorized-user.model";
 export class UserService {
   userSubject: BehaviorSubject<UserModel[]> = new BehaviorSubject<UserModel[]>([]);
   users$: Observable<UserModel[]> = this.userSubject.asObservable();
-  currentUserSig: WritableSignal<UserModel | undefined | null> = signal<UserModel | undefined | null>(undefined);
+  currentUserSig: WritableSignal<UserModel | null> = signal<UserModel | null>(null);
 
   constructor(private http: HttpClient) {
   }
