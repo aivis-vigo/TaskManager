@@ -5,6 +5,7 @@ import {InputValidatorComponent} from "../input-validator/input-validator.compon
 import {TaskService} from "../../services/task.service";
 import {Subject, takeUntil} from "rxjs";
 import {UserService} from "../../services/user.service";
+import {UserModel} from "../../shared/models/user.model";
 
 @Component({
   selector: 'app-create-task',
@@ -34,6 +35,11 @@ export class CreateTaskComponent implements OnDestroy {
     private fb: FormBuilder,
     private taskService: TaskService
   ) {
+    userService.loadInitialUsers()
+      .pipe(takeUntil(this.destroy))
+      .subscribe((res: UserModel[]) => {
+        userService.userSubject.next(res);
+      });
   }
 
   onSubmit(): void {

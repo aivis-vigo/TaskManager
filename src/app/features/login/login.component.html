@@ -1,0 +1,21 @@
+<form [formGroup]="credentials" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="title">Title:</label>
+    <input id="title" type="text" formControlName="username" required>
+  </div>
+
+  <div>
+    <label for="description">Description:</label>
+    <input id="description" type="text" formControlName="password" required>
+  </div>
+
+  @if (errorMessage) {
+    <p>{{errorMessage}}</p>
+  }
+
+  <button class="enabled-button" type="submit">
+    Login
+  </button>
+
+</form>
+
