@@ -22,6 +22,10 @@ export class UserService {
     return this.http.get<UserModel[]>(`${environment.apiEndpoint}/users`);
   }
 
+  register(credentials: LoginCredentialsModel): Observable<AuthorizedUserModel> {
+    return this.http.post<AuthorizedUserModel>(`${environment.apiEndpoint}/register`, credentials);
+  }
+
   login(credentials: LoginCredentialsModel): Observable<AuthorizedUserModel> {
     return this.http.post<AuthorizedUserModel>(`${environment.apiEndpoint}/login`, credentials);
   }

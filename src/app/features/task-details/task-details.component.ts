@@ -8,16 +8,18 @@ import {InputValidatorComponent} from "../input-validator/input-validator.compon
 import {AsyncPipe, NgClass} from "@angular/common";
 import {UserService} from "../../services/user.service";
 import {UserModel} from "../../shared/models/user.model";
+import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
 
 @Component({
   selector: 'app-task-details',
   standalone: true,
-  imports: [
-    InputValidatorComponent,
-    ReactiveFormsModule,
-    NgClass,
-    AsyncPipe
-  ],
+    imports: [
+        InputValidatorComponent,
+        ReactiveFormsModule,
+        NgClass,
+        AsyncPipe,
+        FormSubmitButtonComponent
+    ],
   templateUrl: './task-details.component.html',
   styleUrl: './task-details.component.scss'
 })

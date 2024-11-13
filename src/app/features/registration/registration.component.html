@@ -1,0 +1,39 @@
+<form [formGroup]="credentials" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="firstName">First Name:</label>
+    <input id="firstName" type="text" formControlName="firstName" required>
+    <app-input-validator [property]="firstName"></app-input-validator>
+  </div>
+
+  <div>
+    <label for="lastName">Last name:</label>
+    <input id="lastName" type="text" formControlName="lastName" required>
+    <app-input-validator [property]="lastName"></app-input-validator>
+  </div>
+
+  <div>
+    <label for="title">Username:</label>
+    <input id="title" type="text" formControlName="username" required>
+    <app-input-validator [property]="username"></app-input-validator>
+  </div>
+
+  <div>
+    <label for="description">Password:</label>
+    <input id="description" type="text" formControlName="password" required>
+    <app-input-validator [property]="password"></app-input-validator>
+  </div>
+
+  <div>
+    <label for="confirmPassword">Confirm-Password:</label>
+    <input id="confirmPassword" type="text" formControlName="confirmPassword" required>
+    <app-input-validator [property]="confirmPassword"></app-input-validator>
+  </div>
+
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+
+  <app-form-submit-button [formIsValid]="credentials.valid" text="Register"></app-form-submit-button>
+
+</form>
+

@@ -6,16 +6,18 @@ import {TaskService} from "../../services/task.service";
 import {Subject, takeUntil} from "rxjs";
 import {UserService} from "../../services/user.service";
 import {UserModel} from "../../shared/models/user.model";
+import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
 
 @Component({
   selector: 'app-create-task',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    NgClass,
-    InputValidatorComponent,
-    AsyncPipe,
-  ],
+    imports: [
+        ReactiveFormsModule,
+        NgClass,
+        InputValidatorComponent,
+        AsyncPipe,
+        FormSubmitButtonComponent,
+    ],
   templateUrl: './create-task.component.html',
   styleUrl: './create-task.component.scss'
 })

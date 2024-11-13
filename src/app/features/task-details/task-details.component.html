@@ -52,9 +52,7 @@
 
     </div>
 
-    <button [ngClass]="{'enabled-button': currentTask.valid, 'disabled-button':!currentTask.valid}"
-            [disabled]="!currentTask.valid" type="submit">Update
-    </button>
+    <app-form-submit-button [formIsValid]="currentTask.valid" text="Update"></app-form-submit-button>
 
   </form>
 } @else {

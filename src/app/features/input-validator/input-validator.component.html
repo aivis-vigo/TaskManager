@@ -11,6 +11,11 @@
           Field must be at least {{ minLength }} characters long.
         </p>
       }
+      @if (property.hasError('passwordDoNotMatch')) {
+        <p>
+          Passwords doesn't match!
+        </p>
+      }
     </div>
   }
 }
