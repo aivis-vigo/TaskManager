@@ -35,6 +35,19 @@ export class UserService {
     this.currentUserSig.set(null);
   }
 
+  getUser(id: string): Observable<UserModel> {
+    return this.http.get<UserModel>(`${environment.apiEndpoint}/users/${id}`);
+  }
+
+  updateUser(userId: string, updatedUser: UserModel): Observable<UserModel> {
+    return this.http.put<UserModel>(`${environment.apiEndpoint}/users/update/${userId}`, updatedUser);
+  }
+
+  isAuthorized(): boolean {
+    const currentUser = this.currentUserSig();
+    return currentUser ? currentUser.role.includes('Admin') : false;
+  }
+
   getAuthToken(): string | null {
     return localStorage.getItem('token');
   }
