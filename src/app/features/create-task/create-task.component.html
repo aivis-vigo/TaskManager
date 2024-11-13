@@ -44,8 +44,6 @@
     </select>
   </div>
 
-  <button [ngClass]="{'enabled-button': currentTask.valid, 'disabled-button':!currentTask.valid}"
-          [disabled]="!currentTask.valid" type="submit">Submit
-  </button>
+  <app-form-submit-button [formIsValid]="currentTask.valid" text="Submit"></app-form-submit-button>
 
 </form>

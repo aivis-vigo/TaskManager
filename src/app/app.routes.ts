@@ -26,6 +26,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () => import('./features/login/login.component').then(c => c.LoginComponent)
   },
+  {
+    path: 'register',
+    title: 'TODO - Register',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/registration/registration.component').then(c => c.RegistrationComponent)
+  },
   {path: '', redirectTo: '/create-task', pathMatch: 'full'},
   {
     path: '**',
