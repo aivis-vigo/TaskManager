@@ -1,0 +1,9 @@
+{
+  "app": {
+    "hello": "hello {{value}}",
+    "title": "Translation Demo"
+  },
+  "navigationBar": {
+    "task-list": "Task List"
+  }
+}
