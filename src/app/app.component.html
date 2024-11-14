@@ -1,15 +1,17 @@
 <nav>
   <ul>
-    <li>
-      <a routerLink="create-task" routerLinkActive="active" ariaCurrentWhenActive="page">Create</a>
-    </li>
-    <li>
-      <a routerLink="task-list" routerLinkActive="active" ariaCurrentWhenActive="page">Task List</a>
-    </li>
-    @if (userService.isAuthorized()) {
+    @if (userService.currentUserSig()) {
       <li>
-        <a routerLink="user-list" routerLinkActive="active" ariaCurrentWhenActive="page">User List</a>
+        <a routerLink="task-list" routerLinkActive="active" ariaCurrentWhenActive="page">Task List</a>
       </li>
+      @if (userService.isAuthorized('Admin')) {
+        <li>
+          <a routerLink="create-task" routerLinkActive="active" ariaCurrentWhenActive="page">Create Task</a>
+        </li>
+        <li>
+          <a routerLink="user-list" routerLinkActive="active" ariaCurrentWhenActive="page">User List</a>
+        </li>
+      }
     }
   </ul>
 

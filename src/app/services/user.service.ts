@@ -15,6 +15,10 @@ export class UserService {
   users$: Observable<UserModel[]> = this.userSubject.asObservable();
   currentUserSig: WritableSignal<UserModel | null> = signal<UserModel | null>(null);
 
+  /* todo: while user is not manager he doesn't even see assignTo field */
+
+  /* todo: only manager can assign tasks to users */
+
   constructor(private http: HttpClient) {
   }
 
@@ -43,9 +47,9 @@ export class UserService {
     return this.http.put<UserModel>(`${environment.apiEndpoint}/users/update/${userId}`, updatedUser);
   }
 
-  isAuthorized(): boolean {
+  isAuthorized(role: string): boolean {
     const currentUser = this.currentUserSig();
-    return currentUser ? currentUser.role.includes('Admin') : false;
+    return currentUser ? currentUser.role.includes(role) : false;
   }
 
   getAuthToken(): string | null {
