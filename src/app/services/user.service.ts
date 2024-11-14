@@ -15,10 +15,6 @@ export class UserService {
   users$: Observable<UserModel[]> = this.userSubject.asObservable();
   currentUserSig: WritableSignal<UserModel | null> = signal<UserModel | null>(null);
 
-  /* todo: while user is not manager he doesn't even see assignTo field */
-
-  /* todo: only manager can assign tasks to users */
-
   constructor(private http: HttpClient) {
   }
 

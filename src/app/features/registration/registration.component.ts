@@ -28,6 +28,7 @@ export class RegistrationComponent implements OnDestroy {
     lastName: ['', [Validators.required]],
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
+    role: [['User'], [Validators.required]],
     confirmPassword: ['', [
       Validators.required,
       matchingPasswordsValidator('password')
