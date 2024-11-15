@@ -9,6 +9,8 @@ import {matchingPasswordsValidator} from "../../shared/matching-passwords.direct
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
 import {NgClass} from "@angular/common";
 import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
+import {RoleService} from "../../services/role.service";
+import {RoleModel} from "../../shared/models/role.model";
 
 @Component({
   selector: 'app-registration',
@@ -31,7 +33,7 @@ export class RegistrationComponent implements OnDestroy {
     confirmPassword: ['', [
       Validators.required,
       matchingPasswordsValidator('password')
-    ]],
+    ]]
   });
   private destroy: Subject<void> = new Subject();
   errorMessage: string = '';

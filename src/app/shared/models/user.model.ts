@@ -4,5 +4,5 @@ export interface UserModel {
   lastName: string;
   username: string;
   password: string;
-  role: string[];
+  roles: string[];
 }

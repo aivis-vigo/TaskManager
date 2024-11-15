@@ -45,7 +45,7 @@ export class UserService {
 
   isAuthorized(role: string): boolean {
     const currentUser = this.currentUserSig();
-    return currentUser ? currentUser.role.includes(role) : false;
+    return currentUser ? currentUser.roles.includes(role) : false;
   }
 
   getAuthToken(): string | null {
