@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Form, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute} from "@angular/router";
@@ -28,7 +28,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
     username: ['', [Validators.required]],
-    role: [['User'], [Validators.required]]
+    roles: [[], [Validators.required]]
   });
   user: UserModel = <UserModel>{};
   private destroy: Subject<void> = new Subject();
@@ -56,7 +56,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
               firstName: this.user.firstName,
               lastName: this.user.lastName,
               username: this.user.username,
-              role: this.user.role,
+              roles: this.user.roles,
             });
           });
       } else {
@@ -76,7 +76,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   }
 
   manageRole(role: string, input: EventTarget | null): void {
-    const currentRoles = (this.currentUser.get('role') as FormArray).value;
+    const currentRoles = (this.currentUser.get('roles') as FormArray).value;
     const isChecked = (input as HTMLInputElement).checked;
 
     if (isChecked) {
@@ -93,8 +93,13 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  onUpdate(): void {
-    this.userService.updateUser(this.user._id, this.currentUser.value)
+  isRoleChecked(roleName: string): boolean {
+    const roles = this.currentUser.get('roles');
+    return roles ? roles.value.includes(roleName) : false;
+  }
+
+  onUpdate(user: UserModel, updatedUser: FormGroup): void {
+    this.userService.updateUser(user._id, updatedUser.value)
       .pipe(takeUntil(this.destroy))
       .subscribe((res: UserModel) => {
         this.user = res;
@@ -115,7 +120,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   }
 
   get role() {
-    return this.currentUser.get('role');
+    return this.currentUser.get('roles');
   }
 
   ngOnDestroy(): void {
