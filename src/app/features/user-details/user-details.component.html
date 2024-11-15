@@ -1,0 +1,63 @@
+<button (click)="toggleEditMode()">
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"
+       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 20h9"/>
+    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+  </svg>
+</button>
+
+@if (errorMessage) {
+  <div>{{ errorMessage }}</div>
+}
+
+@if (editMode) {
+  <form [formGroup]="currentUser" (ngSubmit)="onUpdate(user, currentUser)">
+
+    <div class="form-layout">
+      <div>
+        <label for="firstName">First Name:</label>
+        <input id="firstName" type="text" formControlName="firstName" required>
+        <app-input-validator [property]="firstName"></app-input-validator>
+      </div>
+
+      <div>
+        <label for="lastName">Last Name:</label>
+        <input id="lastName" type="text" formControlName="lastName" required>
+        <app-input-validator [property]="lastName"></app-input-validator>
+      </div>
+
+      <div>
+        <label for="username">Username:</label>
+        <input id="username" type="text" formControlName="username" required>
+        <app-input-validator [property]="username"></app-input-validator>
+      </div>
+
+      <div>Roles:</div>
+      @for (role of roleService.roles$ | async; track role) {
+        <div>
+          <input
+            type="checkbox"
+            [value]="role.name"
+            [disabled]="role.name === 'User'"
+            [checked]="isRoleChecked(role.name)"
+            (change)="manageRole(role.name, $event.target)">
+          <label>
+            {{ role.name }}
+          </label>
+        </div>
+      }
+
+    </div>
+
+    <app-form-submit-button [formIsValid]="currentUser.valid" text="Update"></app-form-submit-button>
+
+  </form>
+} @else {
+  @if (user) {
+    <div>
+      <p>{{ user.firstName }}</p>
+      <p>{{ user.lastName }}</p>
+      <p>{{ user.username }}</p>
+    </div>
+  }
+}

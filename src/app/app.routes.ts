@@ -1,5 +1,6 @@
 import {Routes} from "@angular/router";
 import {authGuard} from "./shared/auth.guard";
+import {adminGuard} from "./shared/admin.guard";
 
 export const routes: Routes = [
   {
@@ -31,6 +32,18 @@ export const routes: Routes = [
     title: 'TODO - Register',
     canActivate: [authGuard],
     loadComponent: () => import('./features/registration/registration.component').then(c => c.RegistrationComponent)
+  },
+  {
+    path: 'user-list',
+    title: 'TODO - User List',
+    canActivate: [authGuard, adminGuard],
+    loadComponent: () => import('./features/user-list/user-list.component').then(c => c.UserListComponent)
+  },
+  {
+    path: 'user-list/:id',
+    title: 'TODO - User Details',
+    canActivate: [authGuard, adminGuard],
+    loadComponent: () => import('./features/user-details/user-details.component').then(c => c.UserDetailsComponent)
   },
   {path: '', redirectTo: '/create-task', pathMatch: 'full'},
   {
