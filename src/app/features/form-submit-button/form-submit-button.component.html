@@ -1,5 +1,5 @@
 <button [ngClass]="{'enabled-button': formIsValid, 'disabled-button':!formIsValid}"
         [disabled]="!formIsValid"
         type="submit">
-  {{text}}
+  {{text | translate}}
 </button>

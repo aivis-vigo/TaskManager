@@ -2,39 +2,39 @@
 
   <div class="form-layout">
     <div>
-      <label for="title">Title:</label>
+      <label for="title" [translate]="'createTaskForm.title'"></label>
       <input id="title" type="text" formControlName="title" required>
       <app-input-validator [property]="title" [minLength]="5"></app-input-validator>
     </div>
 
     <div>
-      <label for="description">Description:</label>
+      <label for="description" [translate]="'createTaskForm.description'"></label>
       <input id="description" type="text" formControlName="description" required>
       <app-input-validator [property]="description" [minLength]="10"></app-input-validator>
     </div>
 
     <div>
-      <label for="type">Type:</label>
+      <label for="type" [translate]="'createTaskForm.type'"></label>
       <input id="type" type="text" formControlName="type" required>
       <app-input-validator [property]="type"></app-input-validator>
     </div>
 
     <div>
-      <label for="status">Status:</label>
+      <label for="status" [translate]="'createTaskForm.status'"></label>
       <input id="status" type="text" formControlName="status" required>
     </div>
     <app-input-validator [property]="status"></app-input-validator>
   </div>
 
   <div>
-    <label for="createdOn">Created On:</label>
+    <label for="createdOn" [translate]="'createTaskForm.createdOn'"></label>
     <input id="createdOn" type="text" formControlName="createdOn" required>
     <app-input-validator [property]="createdOn"></app-input-validator>
   </div>
 
   @if (userService.isAuthorized('Manager')) {
     <div>
-      <label for="assignedTo">Assign to:</label>
+      <label for="assignedTo" [translate]="'createTaskForm.assignedTo'"></label>
       <select id="assignedTo" formControlName="assignedTo">
         <option value="Unassigned">Unassigned</option>
         @for (user of userService.users$ | async; track user) {
@@ -46,6 +46,6 @@
     </div>
   }
 
-  <app-form-submit-button [formIsValid]="currentTask.valid" text="Submit"></app-form-submit-button>
+  <app-form-submit-button [formIsValid]="currentTask.valid" [text]="'button.create'"></app-form-submit-button>
 
 </form>

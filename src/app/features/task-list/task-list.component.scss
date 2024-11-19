@@ -1,15 +1,25 @@
 .list-container {
-  @apply container mx-auto space-y-8;
+  @apply container mx-auto py-10;
 }
 
-ul {
-  @apply list-disc;
+.task-grid {
+  @apply grid grid-cols-2 gap-x-4 gap-y-8;
 }
 
 .task-card {
-  @apply flex flex-row justify-between;
+  @apply flex flex-col rounded-2xl p-4 text-custom-white;
+  background-color: rgba(144, 194, 215, 0.5);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-.task-card p {
-  @apply text-center w-1/5;
+.task-card div {
+  @apply flex flex-row;
+}
+
+.task-card div:first-child {
+  @apply flex justify-between text-xl;
+}
+
+.task-card div:last-child {
+  @apply flex justify-between text-sm;
 }

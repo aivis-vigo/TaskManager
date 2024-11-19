@@ -9,6 +9,8 @@ import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-butto
 import {RoleService} from "../../services/role.service";
 import {RoleModel} from "../../shared/models/role.model";
 import {AsyncPipe} from "@angular/common";
+import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
+import {LanguageService} from "../../services/language.service";
 
 @Component({
   selector: 'app-user-details',
@@ -18,7 +20,9 @@ import {AsyncPipe} from "@angular/common";
     FormSubmitButtonComponent,
     ReactiveFormsModule,
     AsyncPipe,
-    FormsModule
+    FormsModule,
+    TranslatePipe,
+    TranslateDirective
   ],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss'
@@ -39,7 +43,8 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     protected userService: UserService,
     protected roleService: RoleService,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private languageService: LanguageService
   ) {
   }
 

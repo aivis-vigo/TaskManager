@@ -1,30 +1,30 @@
 <form [formGroup]="credentials" (ngSubmit)="onSubmit()">
   <div>
-    <label for="firstName">First Name:</label>
+    <label for="firstName" [translate]="'registerForm.firstName'"></label>
     <input id="firstName" type="text" formControlName="firstName" required>
     <app-input-validator [property]="firstName"></app-input-validator>
   </div>
 
   <div>
-    <label for="lastName">Last name:</label>
+    <label for="lastName" [translate]="'registerForm.lastName'"></label>
     <input id="lastName" type="text" formControlName="lastName" required>
     <app-input-validator [property]="lastName"></app-input-validator>
   </div>
 
   <div>
-    <label for="title">Username:</label>
+    <label for="title" [translate]="'registerForm.username'"></label>
     <input id="title" type="text" formControlName="username" required>
     <app-input-validator [property]="username"></app-input-validator>
   </div>
 
   <div>
-    <label for="description">Password:</label>
+    <label for="description" [translate]="'registerForm.password'"></label>
     <input id="description" type="text" formControlName="password" required>
     <app-input-validator [property]="password"></app-input-validator>
   </div>
 
   <div>
-    <label for="confirmPassword">Confirm-Password:</label>
+    <label for="confirmPassword" [translate]="'registerForm.confirmPassword'"></label>
     <input id="confirmPassword" type="text" formControlName="confirmPassword" required>
     <app-input-validator [property]="confirmPassword"></app-input-validator>
   </div>
@@ -33,7 +33,7 @@
     <p>{{ errorMessage }}</p>
   }
 
-  <app-form-submit-button [formIsValid]="credentials.valid" text="Register"></app-form-submit-button>
+  <app-form-submit-button [formIsValid]="credentials.valid" [text]="'button.register'"></app-form-submit-button>
 
 </form>
 

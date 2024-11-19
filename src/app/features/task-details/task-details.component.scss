@@ -1,3 +1,25 @@
+.task-header {
+  @apply flex flex-row justify-between mb-6;
+}
+
+h2 {
+  @apply text-3xl font-bold text-center;
+}
+
+.details-layout {
+  @apply container mx-auto py-20;
+}
+
 .task-card {
-  @apply flex flex-row justify-between;
+  @apply flex flex-col justify-between space-y-4 py-4 rounded-2xl;
+  background-color: rgba(144, 194, 215, 0.5);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.task-card div {
+  @apply flex flex-row space-x-4 px-4;
+}
+
+.task-card div p:first-child {
+  @apply font-bold;
 }

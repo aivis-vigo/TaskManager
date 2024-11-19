@@ -9,6 +9,8 @@ import {matchingPasswordsValidator} from "../../shared/matching-passwords.direct
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
 import {NgClass} from "@angular/common";
 import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
+import {TranslateDirective, TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {LanguageService} from "../../services/language.service";
 
 @Component({
   selector: 'app-registration',
@@ -17,7 +19,9 @@ import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-butto
     ReactiveFormsModule,
     InputValidatorComponent,
     NgClass,
-    FormSubmitButtonComponent
+    FormSubmitButtonComponent,
+    TranslatePipe,
+    TranslateDirective
   ],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss'
@@ -37,7 +41,7 @@ export class RegistrationComponent implements OnDestroy {
   private destroy: Subject<void> = new Subject();
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private languageService: LanguageService) {
   }
 
   onSubmit(): void {

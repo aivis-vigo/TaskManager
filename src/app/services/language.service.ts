@@ -6,14 +6,20 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class LanguageService {
 
+  defaultLanguage: string = 'lv';
+  languageKey = 'language';
+
   constructor(private translate: TranslateService) {
     this.initializeTranslation();
   }
 
   initializeTranslation(): void {
+    const lang = localStorage.getItem(this.languageKey);
+    const initialLanguage = lang || this.defaultLanguage;
+
     this.translate.addLangs(['en', 'lv']);
     this.translate.setDefaultLang('lv');
-    this.translate.use('lv');
+    this.translate.use(initialLanguage);
   }
 
   changeLanguage(language: EventTarget | null): void {
@@ -21,6 +27,7 @@ export class LanguageService {
       const currentLanguage = (language as HTMLInputElement).value;
       if (this.translate.getLangs().includes(currentLanguage)) {
         this.translate.use(currentLanguage);
+        localStorage.setItem(this.languageKey, currentLanguage);
       }
     }
   }
