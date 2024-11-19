@@ -9,7 +9,7 @@ import {matchingPasswordsValidator} from "../../shared/matching-passwords.direct
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
 import {NgClass} from "@angular/common";
 import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
-import {TranslateDirective, TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
 import {LanguageService} from "../../services/language.service";
 
 @Component({
@@ -32,11 +32,10 @@ export class RegistrationComponent implements OnDestroy {
     lastName: ['', [Validators.required]],
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
-    role: [['User'], [Validators.required]],
     confirmPassword: ['', [
       Validators.required,
       matchingPasswordsValidator('password')
-    ]],
+    ]]
   });
   private destroy: Subject<void> = new Subject();
   errorMessage: string = '';
