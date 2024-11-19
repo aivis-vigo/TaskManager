@@ -5,7 +5,7 @@ import {routes} from "./app/app.routes";
 import {HttpClient, provideHttpClient, withFetch, withInterceptors} from '@angular/common/http';
 import {accessInterceptor} from "./app/shared/access.interceptor";
 import {provideTranslateService, TranslateLoader} from "@ngx-translate/core";
-import {BackendTranslationLoader} from "./app/be-translation-loader";
+import {BackendTranslationLoader} from "./app/shared/be-translation-loader";
 import {environment} from "./environments/enviornment";
 
 bootstrapApplication(AppComponent, {
