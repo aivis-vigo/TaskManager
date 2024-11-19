@@ -10,7 +10,6 @@ import {InputValidatorComponent} from "../input-validator/input-validator.compon
 import {NgClass} from "@angular/common";
 import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
-import {LanguageService} from "../../services/language.service";
 
 @Component({
   selector: 'app-registration',
@@ -40,7 +39,7 @@ export class RegistrationComponent implements OnDestroy {
   private destroy: Subject<void> = new Subject();
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private languageService: LanguageService) {
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
   }
 
   onSubmit(): void {
