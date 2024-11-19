@@ -32,7 +32,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
     username: ['', [Validators.required]],
-    role: [['User'], [Validators.required]]
+    roles: [[], [Validators.required]]
   });
   user: UserModel = <UserModel>{};
   private destroy: Subject<void> = new Subject();
@@ -61,7 +61,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
               firstName: this.user.firstName,
               lastName: this.user.lastName,
               username: this.user.username,
-              role: this.user.role,
+              roles: this.user.roles,
             });
           });
       } else {
