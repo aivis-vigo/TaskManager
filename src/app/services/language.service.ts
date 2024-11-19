@@ -15,7 +15,7 @@ export class LanguageService {
 
   initializeTranslation(): void {
     const lang = localStorage.getItem(this.languageKey);
-    const initialLanguage = lang || this.defaultLanguage;
+    const initialLanguage = lang ?? this.defaultLanguage;
 
     this.translate.addLangs(['en', 'lv']);
     this.translate.setDefaultLang('lv');

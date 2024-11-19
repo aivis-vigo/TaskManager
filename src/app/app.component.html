@@ -5,16 +5,16 @@
       @if (userService.currentUserSig()) {
         <li>
           <a routerLink="task-list" routerLinkActive="active" ariaCurrentWhenActive="page"
-             [translate]="'navigationBar.task-list'"></a>
+             [translate]="'navigationBar.task.listName'"></a>
         </li>
         @if (userService.isAuthorized('Admin')) {
           <li>
             <a routerLink="create-task" routerLinkActive="active" ariaCurrentWhenActive="page"
-               [translate]="'navigationBar.create-task'"></a>
+               [translate]="'navigationBar.task.create'"></a>
           </li>
           <li>
             <a routerLink="user-list" routerLinkActive="active" ariaCurrentWhenActive="page"
-               [translate]="'navigationBar.user-list'"></a>
+               [translate]="'navigationBar.task.listUser'"></a>
           </li>
         }
       }
