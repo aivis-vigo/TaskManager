@@ -11,7 +11,7 @@
 }
 
 @if (editMode) {
-  <form [formGroup]="currentUser" (ngSubmit)="onUpdate()">
+  <form [formGroup]="currentUser" (ngSubmit)="onUpdate(user, currentUser)">
 
     <div class="form-layout">
       <div>
@@ -39,7 +39,7 @@
             type="checkbox"
             [value]="role.name"
             [disabled]="role.name === 'User'"
-            [checked]="(this.currentUser.get('role')?.value || []).includes(role.name)"
+            [checked]="isRoleChecked(role.name)"
             (change)="manageRole(role.name, $event.target)">
           <label>
             {{ role.name }}

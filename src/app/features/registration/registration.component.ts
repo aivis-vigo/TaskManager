@@ -34,7 +34,7 @@ export class RegistrationComponent implements OnDestroy {
     confirmPassword: ['', [
       Validators.required,
       matchingPasswordsValidator('password')
-    ]],
+    ]]
   });
   private destroy: Subject<void> = new Subject();
   errorMessage: string = '';
