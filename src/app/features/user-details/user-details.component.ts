@@ -46,22 +46,19 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const userId: string | null = this.route.snapshot.paramMap.get('id');
     if (userId) {
-      const fetchedUser: Observable<UserModel> = this.userService.getUser(userId);
-      if (fetchedUser) {
-        fetchedUser
-          .pipe(takeUntil(this.destroy))
-          .subscribe((res: UserModel) => {
-            this.user = res;
-            this.currentUser.setValue({
-              firstName: this.user.firstName,
-              lastName: this.user.lastName,
-              username: this.user.username,
-              roles: this.user.roles,
-            });
+      this.userService.getUser(userId)
+        .pipe(takeUntil(this.destroy))
+        .subscribe((res: UserModel) => {
+          this.user = res;
+          this.currentUser.setValue({
+            firstName: this.user.firstName,
+            lastName: this.user.lastName,
+            username: this.user.username,
+            roles: this.user.roles,
           });
-      } else {
-        this.errorMessage = `Failed to fetch user with id: ${userId}`;
-      }
+        });
+    } else {
+      this.errorMessage = `Failed to fetch user with id: ${userId}`;
     }
     this.roleService.loadInitialRoles()
       .pipe(takeUntil(this.destroy))

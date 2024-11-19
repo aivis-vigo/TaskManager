@@ -7,6 +7,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const userService = inject(UserService);
   const token = userService.getAuthToken();
 
+
   if (!token) {
     if (state.url === '/login' || state.url === '/register') {
       return true;
@@ -16,9 +17,11 @@ export const authGuard: CanActivateFn = (route, state) => {
     return false;
   }
 
-  if (state.url === '/login' || state.url === '/register') {
-    router.navigateByUrl('/task-list');
-    return false;
+  if (!userService.isAuthorized('Admin')) {
+    if (state.url !== '/task-list' && !state.url.startsWith('/task-list/')) {
+      router.navigateByUrl('/task-list');
+      return false;
+    }
   }
 
   return true;

@@ -43,9 +43,9 @@ export class UserService {
     return this.http.put<UserModel>(`${environment.apiEndpoint}/users/update/${userId}`, updatedUser);
   }
 
-  isAuthorized(): boolean {
+  isAuthorized(role: string): boolean {
     const currentUser = this.currentUserSig();
-    return currentUser ? currentUser.roles.includes('Admin') : false;
+    return currentUser ? currentUser.roles.includes(role) : false;
   }
 
   getAuthToken(): string | null {

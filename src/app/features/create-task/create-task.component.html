@@ -32,17 +32,19 @@
     <app-input-validator [property]="createdOn"></app-input-validator>
   </div>
 
-  <div>
-    <label for="assignedTo">Assign to:</label>
-    <select id="assignedTo" formControlName="assignedTo">
-      <option value="Unassigned">Unassigned</option>
-      @for (user of userService.users$ | async; track user) {
-        <option [value]="user.username">
-          {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
-        </option>
-      }
-    </select>
-  </div>
+  @if (userService.isAuthorized('Manager')) {
+    <div>
+      <label for="assignedTo">Assign to:</label>
+      <select id="assignedTo" formControlName="assignedTo">
+        <option value="Unassigned">Unassigned</option>
+        @for (user of userService.users$ | async; track user) {
+          <option [value]="user.username">
+            {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
+          </option>
+        }
+      </select>
+    </div>
+  }
 
   <app-form-submit-button [formIsValid]="currentTask.valid" text="Submit"></app-form-submit-button>
 
