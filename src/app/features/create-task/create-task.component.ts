@@ -40,7 +40,6 @@ export class CreateTaskComponent implements OnDestroy {
     protected userService: UserService,
     private fb: FormBuilder,
     private taskService: TaskService,
-    private languageService: LanguageService
   ) {
     userService.loadInitialUsers()
       .pipe(takeUntil(this.destroy))

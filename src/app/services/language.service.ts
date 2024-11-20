@@ -18,7 +18,7 @@ export class LanguageService {
     const initialLanguage = lang ?? this.defaultLanguage;
 
     this.translate.addLangs(['en', 'lv']);
-    this.translate.setDefaultLang('lv');
+    this.translate.setDefaultLang(this.defaultLanguage);
     this.translate.use(initialLanguage);
   }
 
