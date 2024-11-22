@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TaskModel} from "../../shared/models/task.model";
-import {TaskService} from "../../services/task.service";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
@@ -10,7 +9,12 @@ import {UserService} from "../../services/user.service";
 import {UserModel} from "../../shared/models/user.model";
 import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
-import {LanguageService} from "../../services/language.service";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../shared/models/state.model";
+import {selectOpenedTask} from "../../shared/selectors/list.selectors";
+import {updateTask} from "../../shared/actions/list.actions";
+import {loadInitialUsers} from "../../shared/actions/user.actions";
+import {selectUserList} from "../../shared/selectors/user.selectors";
 
 @Component({
   selector: 'app-task-details',
@@ -28,6 +32,8 @@ import {LanguageService} from "../../services/language.service";
   styleUrl: './task-details.component.scss'
 })
 export class TaskDetailsComponent implements OnInit, OnDestroy {
+  private destroy: Subject<void> = new Subject();
+  userList$: Observable<UserModel[]> = this.store.select(selectUserList);
   currentTask: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(5)]],
     description: ['', [Validators.required, Validators.minLength(10)]],
@@ -36,44 +42,34 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
     assignedTo: ['', [Validators.required]],
   });
   task: TaskModel = <TaskModel>{};
-  private destroy: Subject<void> = new Subject();
   errorMessage: string = '';
   editMode: boolean = false;
 
   constructor(
     protected userService: UserService,
     private fb: FormBuilder,
-    private taskService: TaskService,
     private route: ActivatedRoute,
-    private languageService: LanguageService
+    private store: Store<AppState>
   ) {
   }
 
   ngOnInit(): void {
     const taskId: string | null = this.route.snapshot.paramMap.get('id');
     if (taskId) {
-      const fetchedTask: Observable<TaskModel> = this.taskService.getTask(taskId);
-      if (fetchedTask) {
-        fetchedTask
-          .pipe(takeUntil(this.destroy))
-          .subscribe((res: TaskModel) => {
-            this.task = res;
-            this.currentTask.setValue({
-              title: this.task.title,
-              description: this.task.description,
-              type: this.task.type,
-              status: this.task.status,
-              assignedTo: this.task.assignedTo,
-            });
+      this.store.select(selectOpenedTask)
+        .pipe(takeUntil(this.destroy))
+        .subscribe((openedTask: TaskModel) => {
+          this.task = openedTask;
+          this.currentTask.setValue({
+            title: openedTask.title,
+            description: openedTask.description,
+            type: openedTask.type,
+            status: openedTask.status,
+            assignedTo: openedTask.assignedTo,
           });
-      } else {
-        this.errorMessage = `Failed to fetch task with id: ${taskId}`;
-      }
+        });
     }
-
-    this.userService.loadInitialUsers()
-      .pipe(takeUntil(this.destroy))
-      .subscribe((res: UserModel[]) => this.userService.userSubject.next(res));
+    this.store.dispatch(loadInitialUsers());
   }
 
   toggleEditMode(): void {
@@ -81,12 +77,8 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
   }
 
   onUpdate(): void {
-    this.taskService.updateTask(this.task._id, this.currentTask.value)
-      .pipe(takeUntil(this.destroy))
-      .subscribe((res: TaskModel) => {
-        this.task = res;
-        this.toggleEditMode();
-      });
+    this.store.dispatch(updateTask({taskId: this.task._id, task: this.currentTask.value}));
+    this.toggleEditMode();
   }
 
   get title() {
@@ -103,14 +95,6 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
 
   get status() {
     return this.currentTask.get('status');
-  }
-
-  get createdOn() {
-    return this.currentTask.get('createdOn');
-  }
-
-  get assignedTo() {
-    return this.currentTask.get('assignedTo');
   }
 
   ngOnDestroy(): void {

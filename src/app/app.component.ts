@@ -6,6 +6,8 @@ import {UserModel} from "./shared/models/user.model";
 import {TranslateDirective, TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {LanguageService} from "./services/language.service";
 import {FormsModule} from "@angular/forms";
+import {StoreModule} from "@ngrx/store";
+import {loginReducer} from "./features/login/login.reducers";
 
 @Component({
   selector: 'app-root',
@@ -17,7 +19,7 @@ import {FormsModule} from "@angular/forms";
     RouterLinkActive,
     TranslatePipe,
     TranslateDirective,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']

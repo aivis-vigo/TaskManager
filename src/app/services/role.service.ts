@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {RoleModel} from "../shared/models/role.model";
 import {environment} from "../../environments/enviornment";
 
@@ -8,8 +8,6 @@ import {environment} from "../../environments/enviornment";
   providedIn: 'root'
 })
 export class RoleService {
-  roleSubject: BehaviorSubject<RoleModel[]> = new BehaviorSubject<RoleModel[]>([]);
-  roles$: Observable<RoleModel[]> = this.roleSubject.asObservable();
 
   constructor(private http: HttpClient) {
   }

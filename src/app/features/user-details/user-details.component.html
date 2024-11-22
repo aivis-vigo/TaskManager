@@ -33,7 +33,7 @@
       </div>
 
       <div [translate]="'editUserForm.role'"></div>
-      @for (role of roleService.roles$ | async; track role) {
+      @for (role of roleList$ | async; track role) {
         <div>
           <input
             type="checkbox"

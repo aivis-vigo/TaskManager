@@ -1,14 +1,17 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AsyncPipe, NgClass} from "@angular/common";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
-import {TaskService} from "../../services/task.service";
-import {Subject, takeUntil} from "rxjs";
-import {UserService} from "../../services/user.service";
+import {Observable} from "rxjs";
 import {UserModel} from "../../shared/models/user.model";
 import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
-import {LanguageService} from "../../services/language.service";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../shared/models/state.model";
+import {loadInitialUsers} from "../../shared/actions/user.actions";
+import {selectUserList} from "../../shared/selectors/user.selectors";
+import {createTask} from "../../shared/actions/list.actions";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-create-task',
@@ -25,7 +28,8 @@ import {LanguageService} from "../../services/language.service";
   templateUrl: './create-task.component.html',
   styleUrl: './create-task.component.scss'
 })
-export class CreateTaskComponent implements OnDestroy {
+export class CreateTaskComponent {
+  userList$: Observable<UserModel[]> = this.store.select(selectUserList);
   currentTask: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(5)]],
     description: ['', [Validators.required, Validators.minLength(10)]],
@@ -34,24 +38,17 @@ export class CreateTaskComponent implements OnDestroy {
     createdOn: ['', [Validators.required]],
     assignedTo: ['Unassigned', [Validators.required]],
   });
-  private destroy: Subject<void> = new Subject();
 
   constructor(
     protected userService: UserService,
     private fb: FormBuilder,
-    private taskService: TaskService,
+    private store: Store<AppState>
   ) {
-    userService.loadInitialUsers()
-      .pipe(takeUntil(this.destroy))
-      .subscribe((res: UserModel[]) => {
-        userService.userSubject.next(res);
-      });
+    this.store.dispatch(loadInitialUsers());
   }
 
   onSubmit(): void {
-    this.taskService.addTask(this.currentTask.value)
-      .pipe(takeUntil(this.destroy))
-      .subscribe();
+    this.store.dispatch(createTask({task: this.currentTask.value}));
     this.currentTask.reset();
   }
 
@@ -73,14 +70,5 @@ export class CreateTaskComponent implements OnDestroy {
 
   get createdOn() {
     return this.currentTask.get('createdOn');
-  }
-
-  get assignedTo() {
-    return this.currentTask.get('assignedTo');
-  }
-
-  ngOnDestroy() {
-    this.destroy.next();
-    this.destroy.complete();
   }
 }

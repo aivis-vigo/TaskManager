@@ -2,7 +2,8 @@
   <!-- left side -->
   <div>
     <ul>
-      @if (userService.currentUserSig()) {
+      <!-- todo: uncomment this when done -->
+      <!--@if (userService.currentUserSig()) {-->
         <li>
           <a routerLink="task-list" routerLinkActive="active" ariaCurrentWhenActive="page"
              [translate]="'navigationBar.task.listName'"></a>
@@ -17,7 +18,7 @@
                [translate]="'navigationBar.task.listUser'"></a>
           </li>
         }
-      }
+      <!--}-->
     </ul>
   </div>
   <!-- right side -->

@@ -1,11 +1,15 @@
-import {Component, OnDestroy} from '@angular/core';
-import {Subject, takeUntil} from "rxjs";
-import {UserModel} from "../../shared/models/user.model";
+import {Component} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
 import {AsyncPipe} from "@angular/common";
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
-import {LanguageService} from "../../services/language.service";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../shared/models/state.model";
+import {loadInitialUsers} from "../../shared/actions/user.actions";
+import {viewOne} from "../../shared/actions/user.actions";
+import {selectUserList} from "../../shared/selectors/user.selectors";
+import {Observable} from "rxjs";
+import {UserModel} from "../../shared/models/user.model";
 
 @Component({
   selector: 'app-user-list',
@@ -18,24 +22,17 @@ import {LanguageService} from "../../services/language.service";
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss'
 })
-export class UserListComponent implements OnDestroy {
-  private destroy: Subject<void> = new Subject();
+export class UserListComponent {
+  userList$: Observable<UserModel[]> = this.store.select(selectUserList);
 
-  constructor(protected userService: UserService, private router: Router, private languageService: LanguageService) {
-    this.userService.loadInitialUsers()
-      .pipe(takeUntil(this.destroy))
-      .subscribe((res: UserModel[]) => {
-        this.userService.userSubject.next(res);
-      });
+  constructor(
+    protected userService: UserService,
+    private store: Store<AppState>
+  ) {
+    this.store.dispatch(loadInitialUsers());
   }
 
   viewUser(userId: string): void {
-    this.router.navigate(['/user-list', userId]);
+    this.store.dispatch(viewOne({userId: userId}));
   }
-
-  ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
-  }
-
 }

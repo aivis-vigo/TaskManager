@@ -1,13 +1,10 @@
 import {Component, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgClass} from "@angular/common";
-import {UserService} from "../../services/user.service";
-import {Subject, takeUntil} from "rxjs";
-import {HttpErrorResponse} from "@angular/common/http";
-import {Router} from "@angular/router";
-import {AuthorizedUserModel} from "../../shared/models/authorized-user.model";
+import {Subject} from "rxjs";
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
-import {LanguageService} from "../../services/language.service";
+import {login} from "./login.actions";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-login',
@@ -32,28 +29,12 @@ export class LoginComponent implements OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
-    private router: Router,
-    private languageService: LanguageService,
+    private store: Store
   ) {
   }
 
   onSubmit(): void {
-    this.userService.login(this.credentials.value)
-      .pipe(takeUntil(this.destroy))
-      .subscribe({
-        next: (res: AuthorizedUserModel) => {
-          localStorage.setItem('userId', res.user._id);
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('token', res.token);
-          localStorage.setItem('fullName', `${res.user.firstName} ${res.user.lastName}`);
-
-          this.userService.currentUserSig.set(res.user);
-
-          this.router.navigateByUrl('/task-list') ;
-        },
-        error: (res: HttpErrorResponse) => this.errorMessage = res.error.message
-      });
+    this.store.dispatch(login({credentials: this.credentials.value}));
   }
 
   ngOnDestroy() {

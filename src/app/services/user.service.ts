@@ -1,21 +1,23 @@
-import {Injectable, signal, Signal, WritableSignal} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {BehaviorSubject, first, Observable} from "rxjs";
+import {Injectable, signal, WritableSignal} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 import {UserModel} from "../shared/models/user.model";
 import {environment} from "../../environments/enviornment";
-import {TaskModel} from "../shared/models/task.model";
 import {LoginCredentialsModel} from "../shared/models/login-credentials.model";
 import {AuthorizedUserModel} from "../shared/models/authorized-user.model";
+import {Store} from "@ngrx/store";
+import {AppState} from "../shared/models/state.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  userSubject: BehaviorSubject<UserModel[]> = new BehaviorSubject<UserModel[]>([]);
-  users$: Observable<UserModel[]> = this.userSubject.asObservable();
   currentUserSig: WritableSignal<UserModel | null> = signal<UserModel | null>(null);
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private store: Store<AppState>
+  ) {
   }
 
   loadInitialUsers(): Observable<UserModel[]> {
@@ -44,8 +46,11 @@ export class UserService {
   }
 
   isAuthorized(role: string): boolean {
-    const currentUser : UserModel | null = this.currentUserSig();
-    return currentUser ? currentUser.roles.includes(role) : false;
+    /* todo: uncomment when done */
+    /* todo: make it work from user roles not signal */
+    /*const currentUser : UserModel | null = this.currentUserSig();
+    return currentUser ? currentUser.roles.includes(role) : false;*/
+    return true;
   }
 
   getAuthToken(): string | null {

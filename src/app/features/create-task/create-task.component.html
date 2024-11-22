@@ -37,7 +37,7 @@
       <label for="assignedTo" [translate]="'createTaskForm.assignedTo'"></label>
       <select id="assignedTo" formControlName="assignedTo">
         <option value="Unassigned">Unassigned</option>
-        @for (user of userService.users$ | async; track user) {
+        @for (user of userList$ | async; track user) {
           <option [value]="user.username">
             {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
           </option>

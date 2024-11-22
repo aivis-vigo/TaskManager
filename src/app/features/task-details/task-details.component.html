@@ -2,7 +2,8 @@
 <div class="details-layout">
   <div class="task-header">
     <h2>ID: {{ task._id }}</h2>
-    @if (userService.isAuthorized('Admin')) {
+    <!-- todo: uncomment this when finished -->
+    <!--@if (userService.isAuthorized('Admin')) {-->
       <button (click)="toggleEditMode()">
         <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"
              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -10,7 +11,7 @@
           <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
         </svg>
       </button>
-    }
+   <!-- }-->
   </div>
 
   @if (editMode) {
@@ -40,19 +41,20 @@
         </div>
         <app-input-validator [property]="status"></app-input-validator>
 
-        @if (userService.isAuthorized('Manager')) {
+        <!-- todo: same here -->
+        <!--@if (userService.isAuthorized('Manager')) {-->
           <div>
             <label for="assignedTo" [translate]="'createTaskForm.assignedTo'"></label>
             <select id="assignedTo" formControlName="assignedTo">
               <option value="Unassigned">Unassigned</option>
-              @for (user of userService.users$ | async; track user) {
+              @for (user of userList$ | async; track user) {
                 <option [value]="user.username">
                   {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
                 </option>
               }
             </select>
           </div>
-        }
+        <!--}-->
 
         @if (errorMessage) {
           <div>{{ errorMessage }}</div>

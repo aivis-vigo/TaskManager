@@ -5,7 +5,7 @@ import {AuthorizedUserModel} from "../../shared/models/authorized-user.model";
 import {HttpErrorResponse} from "@angular/common/http";
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
-import {matchingPasswordsValidator} from "../../shared/matching-passwords.directive";
+import {matchingPasswordsValidator} from "../../shared/directives/matching-passwords.directive";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
 import {NgClass} from "@angular/common";
 import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
