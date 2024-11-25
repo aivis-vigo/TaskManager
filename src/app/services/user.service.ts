@@ -5,8 +5,6 @@ import {UserModel} from "../shared/models/user.model";
 import {environment} from "../../environments/enviornment";
 import {LoginCredentialsModel} from "../shared/models/login-credentials.model";
 import {AuthorizedUserModel} from "../shared/models/authorized-user.model";
-import {Store} from "@ngrx/store";
-import {AppState} from "../shared/models/state.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +14,6 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private store: Store<AppState>
   ) {
   }
 

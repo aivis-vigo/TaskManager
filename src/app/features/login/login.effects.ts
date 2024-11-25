@@ -35,6 +35,33 @@ export class LoginEffects {
     {dispatch: false}
   );
 
+  registerUser$ = createEffect(() => this.actions$.pipe(
+      ofType(LoginPageActions.register),
+      mergeMap(({user}) => this.userService.register(user)
+        .pipe(
+          map((newUser: AuthorizedUserModel) => LoginPageActions.registerSuccess({authorizedUser: newUser})),
+          catchError(() => EMPTY)
+        )
+      )
+    )
+  );
+
+  registerUserSuccess$ = createEffect(() => this.actions$.pipe(
+      ofType(LoginPageActions.registerSuccess),
+      tap(({authorizedUser}) => {
+          localStorage.setItem('userId', authorizedUser.user._id);
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('token', authorizedUser.token);
+          localStorage.setItem('fullName', `${authorizedUser.user.firstName} ${authorizedUser.user.lastName}`);
+
+          this.userService.currentUserSig.set(authorizedUser.user);
+
+          this.router.navigateByUrl('/task-list');
+        }
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private userService: UserService,

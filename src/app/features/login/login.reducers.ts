@@ -17,5 +17,13 @@ export const loginReducer = createReducer(
     ...state,
     user: authorizedUser.user,
     token: authorizedUser.token
+  })),
+  on(LoginPageActions.register, (state) => ({
+    ...state
+  })),
+  on(LoginPageActions.loginSuccess, (state, {authorizedUser}) => ({
+    ...state,
+    user: authorizedUser.user,
+    token: authorizedUser.token
   }))
 );
