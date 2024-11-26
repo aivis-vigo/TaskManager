@@ -4,6 +4,7 @@ import {CredentialsModel} from "../../shared/models/credentials.model";
 import {LoginCredentialsModel} from "../../shared/models/login-credentials.model";
 
 /* todo: renames as authorization actions */
+/* todo: login won't be needed anymore */
 
 export const login = createAction(
   '[Login Page] Authenticate',

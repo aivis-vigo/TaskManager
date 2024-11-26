@@ -2,13 +2,12 @@
   <!-- left side -->
   <div>
     <ul>
-      <!-- todo: uncomment this when done -->
-      <!--@if (userService.currentUserSig()) {-->
+      @if (userStore.isLoggedIn()) {
         <li>
           <a routerLink="task-list" routerLinkActive="active" ariaCurrentWhenActive="page"
              [translate]="'navigationBar.task.listName'"></a>
         </li>
-        @if (userService.isAuthorized('Admin')) {
+        @if (userStore.isAuthorized('Admin')) {
           <li>
             <a routerLink="create-task" routerLinkActive="active" ariaCurrentWhenActive="page"
                [translate]="'navigationBar.task.create'"></a>
@@ -18,7 +17,7 @@
                [translate]="'navigationBar.task.listUser'"></a>
           </li>
         }
-      <!--}-->
+      }
     </ul>
   </div>
   <!-- right side -->
@@ -30,7 +29,7 @@
     </select>
 
     <!-- login/register -->
-    @if (!userService.currentUserSig()) {
+    @if (!userStore.isLoggedIn()) {
       <div>
         <a routerLink="login" routerLinkActive="active" ariaCurrentWhenActive="page"
            [translate]="'navigationBar.login'"></a>
@@ -40,14 +39,14 @@
     }
 
     <!-- authorized users name -->
-    @if (userService.currentUserSig()) {
+    @if (userStore.isLoggedIn()) {
       <div>
         <p>{{ userService.getFullName() }}</p>
         <a
           routerLink="login"
           routerLinkActive="active"
           ariaCurrentWhenActive="page"
-          (click)="userService.logout()"
+          (click)="userStore.logout()"
           [translate]="'button.logout'">
         </a>
       </div>

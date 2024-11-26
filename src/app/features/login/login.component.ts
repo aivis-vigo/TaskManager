@@ -1,10 +1,11 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, inject, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgClass} from "@angular/common";
-import {Subject} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
-import {login} from "./login.actions";
-import {Store} from "@ngrx/store";
+import {UserStore} from "../../shared/user.store";
+import {AuthorizedUserModel} from "../../shared/models/authorized-user.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -14,12 +15,13 @@ import {Store} from "@ngrx/store";
     ReactiveFormsModule,
     NgClass,
     TranslatePipe,
-    TranslateDirective
+    TranslateDirective,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnDestroy {
+  readonly userStore = inject(UserStore);
   credentials: FormGroup = this.fb.group({
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
@@ -29,12 +31,21 @@ export class LoginComponent implements OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store
+    private router: Router
   ) {
   }
 
   onSubmit(): void {
-    this.store.dispatch(login({credentials: this.credentials.value}));
+    this.userStore.login(this.credentials.value)
+      .pipe(takeUntil(this.destroy))
+      .subscribe((res: AuthorizedUserModel) => {
+        localStorage.setItem('userId', res.user._id);
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('fullName', `${res.user.firstName} ${res.user.lastName}`);
+
+        this.router.navigateByUrl('/task-list');
+      });
   }
 
   ngOnDestroy() {

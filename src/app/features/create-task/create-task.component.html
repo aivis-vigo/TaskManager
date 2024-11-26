@@ -32,7 +32,7 @@
     <app-input-validator [property]="createdOn"></app-input-validator>
   </div>
 
-  @if (userService.isAuthorized('Manager')) {
+  @if (userStore.isAuthorized('Manager')) {
     <div>
       <label for="assignedTo" [translate]="'createTaskForm.assignedTo'"></label>
       <select id="assignedTo" formControlName="assignedTo">

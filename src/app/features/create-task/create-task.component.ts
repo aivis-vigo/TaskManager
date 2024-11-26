@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AsyncPipe, NgClass} from "@angular/common";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
@@ -12,6 +12,7 @@ import {loadInitialUsers} from "../../shared/actions/user.actions";
 import {selectUserList} from "../../shared/selectors/user.selectors";
 import {createTask} from "../../shared/actions/list.actions";
 import {UserService} from "../../services/user.service";
+import {UserStore} from "../../shared/user.store";
 
 @Component({
   selector: 'app-create-task',
@@ -29,6 +30,7 @@ import {UserService} from "../../services/user.service";
   styleUrl: './create-task.component.scss'
 })
 export class CreateTaskComponent {
+  readonly userStore = inject(UserStore);
   userList$: Observable<UserModel[]> = this.store.select(selectUserList);
   currentTask: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(5)]],

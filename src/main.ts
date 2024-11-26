@@ -43,6 +43,6 @@ bootstrapApplication(AppComponent, {
       TaskListEffects,
       UserEffects,
       RoleEffects,
-    )
+    ),
   ]
 }).catch(err => console.error(err));

@@ -46,6 +46,7 @@ export class LoginEffects {
     )
   );
 
+  /* todo: remove this and for other stuff because singal is used */
   registerUserSuccess$ = createEffect(() => this.actions$.pipe(
       ofType(LoginPageActions.registerSuccess),
       tap(({authorizedUser}) => {
@@ -54,7 +55,7 @@ export class LoginEffects {
           localStorage.setItem('token', authorizedUser.token);
           localStorage.setItem('fullName', `${authorizedUser.user.firstName} ${authorizedUser.user.lastName}`);
 
-          this.userService.currentUserSig.set(authorizedUser.user);
+          /*this.userService.currentUserSig.set(authorizedUser.user);*/
 
           this.router.navigateByUrl('/task-list');
         }
