@@ -1,4 +1,4 @@
-import {RoleModel} from "./shared/models/role.model";
+import {RoleModel} from "./role.model";
 
 export interface RoleListStateModel {
   roleList: RoleModel[]
