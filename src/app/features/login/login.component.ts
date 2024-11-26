@@ -6,6 +6,8 @@ import {Subject, takeUntil} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AuthorizedUserModel} from "../../shared/models/authorized-user.model";
+import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
+import {LanguageService} from "../../services/language.service";
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,9 @@ import {AuthorizedUserModel} from "../../shared/models/authorized-user.model";
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    NgClass
+    NgClass,
+    TranslatePipe,
+    TranslateDirective
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -29,7 +33,8 @@ export class LoginComponent implements OnDestroy {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private languageService: LanguageService,
   ) {
   }
 

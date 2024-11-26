@@ -1,31 +1,57 @@
 <nav>
-  <ul>
-    @if (userService.currentUserSig()) {
-      <li>
-        <a routerLink="task-list" routerLinkActive="active" ariaCurrentWhenActive="page">Task List</a>
-      </li>
-      @if (userService.isAuthorized('Admin')) {
+  <!-- left side -->
+  <div>
+    <ul>
+      @if (userService.currentUserSig()) {
         <li>
-          <a routerLink="create-task" routerLinkActive="active" ariaCurrentWhenActive="page">Create Task</a>
+          <a routerLink="task-list" routerLinkActive="active" ariaCurrentWhenActive="page"
+             [translate]="'navigationBar.task.listName'"></a>
         </li>
-        <li>
-          <a routerLink="user-list" routerLinkActive="active" ariaCurrentWhenActive="page">User List</a>
-        </li>
+        @if (userService.isAuthorized('Admin')) {
+          <li>
+            <a routerLink="create-task" routerLinkActive="active" ariaCurrentWhenActive="page"
+               [translate]="'navigationBar.task.create'"></a>
+          </li>
+          <li>
+            <a routerLink="user-list" routerLinkActive="active" ariaCurrentWhenActive="page"
+               [translate]="'navigationBar.task.listUser'"></a>
+          </li>
+        }
       }
+    </ul>
+  </div>
+  <!-- right side -->
+  <div>
+    <!-- change language -->
+    <select (change)="languageService.changeLanguage($event.target)">
+      <option value="lv">LV</option>
+      <option value="en">EN</option>
+    </select>
+
+    <!-- login/register -->
+    @if (!userService.currentUserSig()) {
+      <div>
+        <a routerLink="login" routerLinkActive="active" ariaCurrentWhenActive="page"
+           [translate]="'navigationBar.login'"></a>
+        <a routerLink="register" routerLinkActive="active" ariaCurrentWhenActive="page"
+           [translate]="'navigationBar.register'"></a>
+      </div>
     }
-  </ul>
 
-  @if (!userService.currentUserSig()) {
-    <a routerLink="login" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a>
-    <a routerLink="register" routerLinkActive="active" ariaCurrentWhenActive="page">Register</a>
-  }
-
-  @if (userService.currentUserSig()) {
-    <p>{{ userService.getFullName() }}</p>
-    <a routerLink="login" routerLinkActive="active" ariaCurrentWhenActive="page"
-       (click)="userService.logout()">Logout</a>
-  }
-
+    <!-- authorized users name -->
+    @if (userService.currentUserSig()) {
+      <div>
+        <p>{{ userService.getFullName() }}</p>
+        <a
+          routerLink="login"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          (click)="userService.logout()"
+          [translate]="'button.logout'">
+        </a>
+      </div>
+    }
+  </div>
 </nav>
 
 <router-outlet></router-outlet>

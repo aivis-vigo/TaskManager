@@ -9,17 +9,21 @@ import {AsyncPipe, NgClass} from "@angular/common";
 import {UserService} from "../../services/user.service";
 import {UserModel} from "../../shared/models/user.model";
 import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
+import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
+import {LanguageService} from "../../services/language.service";
 
 @Component({
   selector: 'app-task-details',
   standalone: true,
-    imports: [
-        InputValidatorComponent,
-        ReactiveFormsModule,
-        NgClass,
-        AsyncPipe,
-        FormSubmitButtonComponent
-    ],
+  imports: [
+    InputValidatorComponent,
+    ReactiveFormsModule,
+    NgClass,
+    AsyncPipe,
+    FormSubmitButtonComponent,
+    TranslatePipe,
+    TranslateDirective
+  ],
   templateUrl: './task-details.component.html',
   styleUrl: './task-details.component.scss'
 })
@@ -40,7 +44,8 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
     protected userService: UserService,
     private fb: FormBuilder,
     private taskService: TaskService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private languageService: LanguageService
   ) {
   }
 

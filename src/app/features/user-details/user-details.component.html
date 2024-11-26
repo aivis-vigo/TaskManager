@@ -15,24 +15,24 @@
 
     <div class="form-layout">
       <div>
-        <label for="firstName">First Name:</label>
+        <label for="firstName" [translate]="'registerForm.firstName'"></label>
         <input id="firstName" type="text" formControlName="firstName" required>
         <app-input-validator [property]="firstName"></app-input-validator>
       </div>
 
       <div>
-        <label for="lastName">Last Name:</label>
+        <label for="lastName" [translate]="'registerForm.lastName'"></label>
         <input id="lastName" type="text" formControlName="lastName" required>
         <app-input-validator [property]="lastName"></app-input-validator>
       </div>
 
       <div>
-        <label for="username">Username:</label>
+        <label for="username" [translate]="'registerForm.username'"></label>
         <input id="username" type="text" formControlName="username" required>
         <app-input-validator [property]="username"></app-input-validator>
       </div>
 
-      <div>Roles:</div>
+      <div [translate]="'editUserForm.role'"></div>
       @for (role of roleService.roles$ | async; track role) {
         <div>
           <input
@@ -49,7 +49,7 @@
 
     </div>
 
-    <app-form-submit-button [formIsValid]="currentUser.valid" text="Update"></app-form-submit-button>
+    <app-form-submit-button [formIsValid]="currentUser.valid" [text]="'button.update'"></app-form-submit-button>
 
   </form>
 } @else {

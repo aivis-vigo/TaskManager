@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Form, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Observable, Subject, takeUntil} from "rxjs";
+import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Subject, takeUntil} from "rxjs";
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute} from "@angular/router";
 import {UserModel} from "../../shared/models/user.model";
@@ -9,6 +9,8 @@ import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-butto
 import {RoleService} from "../../services/role.service";
 import {RoleModel} from "../../shared/models/role.model";
 import {AsyncPipe} from "@angular/common";
+import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
+import {LanguageService} from "../../services/language.service";
 
 @Component({
   selector: 'app-user-details',
@@ -18,7 +20,9 @@ import {AsyncPipe} from "@angular/common";
     FormSubmitButtonComponent,
     ReactiveFormsModule,
     AsyncPipe,
-    FormsModule
+    FormsModule,
+    TranslatePipe,
+    TranslateDirective
   ],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss'
@@ -39,7 +43,8 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     protected userService: UserService,
     protected roleService: RoleService,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private languageService: LanguageService
   ) {
   }
 
@@ -85,8 +90,8 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (this.role && currentRoles) {
-      this.role.setValue(currentRoles);
+    if (this.roles && currentRoles) {
+      this.roles.setValue(currentRoles);
     }
   }
 
@@ -116,7 +121,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     return this.currentUser.get('username');
   }
 
-  get role() {
+  get roles() {
     return this.currentUser.get('roles');
   }
 

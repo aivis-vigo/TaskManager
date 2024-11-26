@@ -4,12 +4,16 @@ import {UserModel} from "../../shared/models/user.model";
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
 import {AsyncPipe} from "@angular/common";
+import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
+import {LanguageService} from "../../services/language.service";
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
   imports: [
-    AsyncPipe
+    AsyncPipe,
+    TranslatePipe,
+    TranslateDirective
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss'
@@ -17,7 +21,7 @@ import {AsyncPipe} from "@angular/common";
 export class UserListComponent implements OnDestroy {
   private destroy: Subject<void> = new Subject();
 
-  constructor(protected userService: UserService, private router: Router) {
+  constructor(protected userService: UserService, private router: Router, private languageService: LanguageService) {
     this.userService.loadInitialUsers()
       .pipe(takeUntil(this.destroy))
       .subscribe((res: UserModel[]) => {

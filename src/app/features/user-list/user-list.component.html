@@ -1,4 +1,4 @@
-<div>Users registered in DB:</div>
+<div [translate]="'userList.title'"></div>
 <ul>
   @for (user of userService.users$ | async; track user) {
     <li (click)="viewUser(user._id)">
