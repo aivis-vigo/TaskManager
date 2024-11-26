@@ -29,7 +29,7 @@ export const taskReducer = createReducer(
       ...state,
     })
   ),
-  on(TaskListActions.viewSuccess, (state, {tasks}) => ({
+  on(TaskListActions.viewAllSuccess, (state, {tasks}) => ({
     ...state,
     taskList: tasks
   })),

@@ -12,7 +12,7 @@ export class TaskListEffects {
   loadTasks$ = createEffect(() => this.actions$.pipe(
       ofType(TaskListActions.viewAll),
       mergeMap(() => this.taskService.loadInitialTasks().pipe(
-          map((taskList: TaskModel[]) => TaskListActions.viewSuccess({tasks: taskList})),
+          map((taskList: TaskModel[]) => TaskListActions.viewAllSuccess({tasks: taskList})),
           catchError(() => EMPTY)
         )
       )

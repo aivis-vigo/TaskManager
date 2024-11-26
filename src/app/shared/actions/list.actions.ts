@@ -3,8 +3,7 @@ import {TaskModel} from "../models/task.model";
 
 export const viewAll = createAction('[Task List] View')
 
-/* todo: consistent naming */
-export const viewSuccess = createAction(
+export const viewAllSuccess = createAction(
   '[Task List] View Success',
   props<{ tasks: TaskModel[] }>()
 );

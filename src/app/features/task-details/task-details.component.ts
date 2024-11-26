@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TaskModel} from "../../shared/models/task.model";
 import {Observable, Subject, takeUntil} from "rxjs";
@@ -15,6 +15,7 @@ import {selectOpenedTask} from "../../shared/selectors/list.selectors";
 import {updateTask} from "../../shared/actions/list.actions";
 import {loadInitialUsers} from "../../shared/actions/user.actions";
 import {selectUserList} from "../../shared/selectors/user.selectors";
+import {UserStore} from "../../shared/user.store";
 
 @Component({
   selector: 'app-task-details',
@@ -32,6 +33,7 @@ import {selectUserList} from "../../shared/selectors/user.selectors";
   styleUrl: './task-details.component.scss'
 })
 export class TaskDetailsComponent implements OnInit, OnDestroy {
+  readonly userStore = inject(UserStore);
   private destroy: Subject<void> = new Subject();
   userList$: Observable<UserModel[]> = this.store.select(selectUserList);
   currentTask: FormGroup = this.fb.group({

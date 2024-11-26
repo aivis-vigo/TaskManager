@@ -10,20 +10,7 @@ export const initialUser: AuthorizedUserModel = {
 
 export const loginReducer = createReducer(
   initialUser,
-  on(LoginPageActions.login, (state, {credentials}) => ({
-    ...state
-  })),
-  on(LoginPageActions.loginSuccess, (state, {authorizedUser}) => ({
-    ...state,
-    user: authorizedUser.user,
-    token: authorizedUser.token
-  })),
   on(LoginPageActions.register, (state) => ({
     ...state
   })),
-  on(LoginPageActions.loginSuccess, (state, {authorizedUser}) => ({
-    ...state,
-    user: authorizedUser.user,
-    token: authorizedUser.token
-  }))
 );
