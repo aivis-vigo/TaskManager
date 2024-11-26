@@ -11,7 +11,6 @@ import {AppState} from "../../shared/models/state.model";
 import {loadInitialUsers} from "../../shared/actions/user.actions";
 import {selectUserList} from "../../shared/selectors/user.selectors";
 import {createTask} from "../../shared/actions/list.actions";
-import {UserService} from "../../services/user.service";
 import {UserStore} from "../../shared/user.store";
 
 @Component({
@@ -42,7 +41,6 @@ export class CreateTaskComponent {
   });
 
   constructor(
-    protected userService: UserService,
     private fb: FormBuilder,
     private store: Store<AppState>
   ) {

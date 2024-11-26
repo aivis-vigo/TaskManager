@@ -6,8 +6,6 @@ import {UserService} from "../../services/user.service";
 import {UserModel} from "../models/user.model";
 import {Router} from "@angular/router";
 
-/* todo: error handling also for tasks */
-
 @Injectable()
 export class UserEffects {
 
