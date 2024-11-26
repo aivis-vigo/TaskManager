@@ -1,4 +1,4 @@
-import {getState, patchState, signalStore, withComputed, withHooks, withMethods, withState} from "@ngrx/signals";
+import {patchState, signalStore, withComputed, withMethods, withState} from "@ngrx/signals";
 import {AuthorizedUserModel} from "./models/authorized-user.model";
 import {UserModel} from "./models/user.model";
 import {computed, inject} from "@angular/core";
