@@ -1,6 +1,6 @@
 import {AppState} from "../models/state.model";
 import {createSelector} from "@ngrx/store";
-import {RoleListStateModel} from "../models/role-list.model";
+import {RoleListStateModel} from "../../role-list.model";
 
 export const roleSelector = (state: AppState) => state.roles;
 
