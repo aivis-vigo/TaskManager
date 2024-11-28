@@ -6,13 +6,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        "prata": ['"Prata"', 'serif'],
+        "b612-mono": ['"B612 Mono"', 'monospace'],
       },
       colors: {
-        "custom-orange": "#F96E2A",
-        "custom-white": "#FBF8EF",
-        "custom-lighter-blue": "#C9E6F0",
-        "custom-darker-blue": "#78B3CE",
+        "custom-primary": "#F5F5F5",
+        "custom-secondary": "#48CFCB",
+        "custom-darker-secondary": "#229799",
+        "custom-dark": "#424242",
       }
     },
   },

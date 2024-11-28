@@ -8,10 +8,6 @@ export class BackendTranslationLoader implements TranslateLoader {
   }
 
   getTranslation(lang: string): Observable<any> {
-
-    console.log(lang);
-    this.http.get<TranslationModel>(`${this.apiEndpoint}/translations/${lang}`).pipe(tap((res) => console.log(res))).subscribe();
-
     return this.http.get<TranslationModel>(`${this.apiEndpoint}/translations/${lang}`);
   }
 }
