@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {UserService} from "../../../services/user.service";
-import {Router} from "@angular/router";
 import {AsyncPipe} from "@angular/common";
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
 import {Store} from "@ngrx/store";
@@ -26,7 +24,6 @@ export class UserListComponent {
   userList$: Observable<UserModel[]> = this.store.select(selectUserList);
 
   constructor(
-    protected userService: UserService,
     private store: Store<AppState>
   ) {
     this.store.dispatch(loadInitialUsers());

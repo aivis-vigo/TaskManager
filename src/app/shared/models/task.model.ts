@@ -5,5 +5,6 @@ export interface TaskModel {
   type: string,
   createdOn: string,
   status: string,
-  assignedTo: string
+  assignedToUser: string,
+  assignedToGroup: string,
 }

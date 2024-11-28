@@ -35,9 +35,6 @@ export class UserGroupComponent implements OnInit {
     members: [[], Validators.required],
   })
 
-  /* todo: translations */
-  /* todo: change the key for not working translations, because everything else works just fine? */
-
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
   }
 

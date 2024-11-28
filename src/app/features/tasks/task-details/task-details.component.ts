@@ -15,6 +15,9 @@ import {updateTask} from "../../../shared/actions/list.actions";
 import {loadInitialUsers} from "../../../shared/actions/user.actions";
 import {selectUserList} from "../../../shared/selectors/user.selectors";
 import {UserStore} from "../../../shared/user.store";
+import {GroupModel} from "../../../shared/models/group.model";
+import {selectGroupList} from "../../../shared/selectors/group.selectors";
+import {loadInitialGroups} from "../../../shared/actions/group.actions";
 
 @Component({
   selector: 'app-task-details',
@@ -35,12 +38,14 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
   readonly userStore = inject(UserStore);
   private destroy: Subject<void> = new Subject();
   userList$: Observable<UserModel[]> = this.store.select(selectUserList);
+  groupList$: Observable<GroupModel[]> = this.store.select(selectGroupList);
   currentTask: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(5)]],
     description: ['', [Validators.required, Validators.minLength(10)]],
     type: ['', [Validators.required]],
     status: ['', [Validators.required]],
-    assignedTo: ['', [Validators.required]],
+    assignedToUser: ['', [Validators.required]],
+    assignedToGroup: ['', [Validators.required]],
   });
   task: TaskModel = <TaskModel>{};
   errorMessage: string = '';
@@ -65,11 +70,13 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
             description: openedTask.description,
             type: openedTask.type,
             status: openedTask.status,
-            assignedTo: openedTask.assignedTo,
+            assignedToUser: openedTask.assignedToUser ?? 'Unassigned',
+            assignedToGroup: openedTask.assignedToGroup ?? 'Unassigned',
           });
         });
     }
     this.store.dispatch(loadInitialUsers());
+    this.store.dispatch(loadInitialGroups());
   }
 
   toggleEditMode(): void {
@@ -97,8 +104,8 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
     return this.currentTask.get('status');
   }
 
-    ngOnDestroy(): void {
-      this.destroy.next();
-      this.destroy.complete();
-    }
+  ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.complete();
+  }
 }

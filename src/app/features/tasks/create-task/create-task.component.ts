@@ -12,6 +12,9 @@ import {loadInitialUsers} from "../../../shared/actions/user.actions";
 import {selectUserList} from "../../../shared/selectors/user.selectors";
 import {createTask} from "../../../shared/actions/list.actions";
 import {UserStore} from "../../../shared/user.store";
+import {loadInitialGroups} from "../../../shared/actions/group.actions";
+import {GroupModel} from "../../../shared/models/group.model";
+import {selectGroupList} from "../../../shared/selectors/group.selectors";
 
 @Component({
   selector: 'app-create-task',
@@ -31,13 +34,15 @@ import {UserStore} from "../../../shared/user.store";
 export class CreateTaskComponent {
   readonly userStore = inject(UserStore);
   userList$: Observable<UserModel[]> = this.store.select(selectUserList);
+  groupList$: Observable<GroupModel[]> = this.store.select(selectGroupList);
   currentTask: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(5)]],
     description: ['', [Validators.required, Validators.minLength(10)]],
     type: ['', [Validators.required]],
     status: ['', [Validators.required]],
     createdOn: ['', [Validators.required]],
-    assignedTo: ['Unassigned', [Validators.required]],
+    assignedToUser: ['Unassigned', [Validators.required]],
+    assignedToGroup: ['Unassigned', [Validators.required]],
   });
 
   constructor(
@@ -45,6 +50,7 @@ export class CreateTaskComponent {
     private store: Store<AppState>
   ) {
     this.store.dispatch(loadInitialUsers());
+    this.store.dispatch(loadInitialGroups());
   }
 
   onSubmit(): void {

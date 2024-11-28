@@ -34,12 +34,24 @@
 
   @if (userStore.isAuthorized('Manager')) {
     <div>
-      <label for="assignedTo" [translate]="'createTaskForm.assignedTo'"></label>
-      <select id="assignedTo" formControlName="assignedTo">
+      <label for="assignedToUser" [translate]="'createTaskForm.assignedToUser'"></label>
+      <select id="assignedToUser" formControlName="assignedToUser">
         <option value="Unassigned">Unassigned</option>
         @for (user of userList$ | async; track user) {
           <option [value]="user.username">
             {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
+          </option>
+        }
+      </select>
+    </div>
+
+    <div>
+      <label for="assignedToGroup" [translate]="'createTaskForm.assignedToGroup'"></label>
+      <select id="assignedToGroup" formControlName="assignedToGroup">
+        <option value="Unassigned">Unassigned</option>
+        @for (group of groupList$ | async; track group) {
+          <option [value]="group.title">
+            {{ group.title }}
           </option>
         }
       </select>

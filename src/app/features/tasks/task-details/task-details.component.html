@@ -42,12 +42,24 @@
 
         @if (userStore.isAuthorized('Manager')) {
           <div>
-            <label for="assignedTo" [translate]="'createTaskForm.assignedTo'"></label>
-            <select id="assignedTo" formControlName="assignedTo">
+            <label for="assignedToUser" [translate]="'createTaskForm.assignedToUser'"></label>
+            <select id="assignedToUser" formControlName="assignedToUser">
               <option value="Unassigned">Unassigned</option>
               @for (user of userList$ | async; track user) {
-                <option [value]="user.username">
+                <option [value]="user.username" [selected]="user.username === task.assignedToUser">
                   {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
+                </option>
+              }
+            </select>
+          </div>
+
+          <div>
+            <label for="assignedToGroup" [translate]="'createTaskForm.assignedToGroup'">Assigned To group:</label>
+            <select id="assignedToGroup" formControlName="assignedToGroup">
+              <option value="Unassigned">Unassigned</option>
+              @for (group of groupList$ | async; track group) {
+                <option [value]="group.title" [selected]="group.title === task.assignedToGroup">
+                  {{ group.title }}
                 </option>
               }
             </select>
@@ -83,9 +95,13 @@
           <p>{{ task.status }}</p>
         </div>
         <div>
-          <p>{{ 'createTaskForm.assignedTo' | translate }}:</p>
-          <p>{{ task.assignedTo }}</p>
+          <p>{{ 'createTaskForm.assignedToUser' | translate }}:</p>
+          <p>{{ task.assignedToUser }}</p>
         </div>
+      <div>
+        <p>{{ 'createTaskForm.assignedToGroup' | translate }}:</p>
+        <p>{{ task.assignedToGroup }}</p>
+      </div>
         <div>
           <p>{{ 'createTaskForm.createdOn' | translate }}:</p>
           <p>{{ task.createdOn }}</p>
