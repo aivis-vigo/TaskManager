@@ -1,6 +1,6 @@
-import {AuthorizedUserModel} from "../../shared/models/authorized-user.model";
+import {AuthorizedUserModel} from "../../../shared/models/authorized-user.model";
 import {createSelector} from "@ngrx/store";
-import {AppState} from "../../shared/models/state.model";
+import {AppState} from "../../../shared/models/state.model";
 
 export const selectAuthorizedUser = (state: AppState) => state.login;
 

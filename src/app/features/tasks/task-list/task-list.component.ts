@@ -3,10 +3,10 @@ import {CreateTaskComponent} from "../create-task/create-task.component";
 import {AsyncPipe} from "@angular/common";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
-import {AppState} from "../../shared/models/state.model";
-import {deleteTask, viewAll, viewOne} from "../../shared/actions/list.actions";
-import {selectTaskList} from "../../shared/selectors/list.selectors";
-import {TaskModel} from "../../shared/models/task.model";
+import {AppState} from "../../../shared/models/state.model";
+import {deleteTask, viewAll, viewOne} from "../../../shared/actions/list.actions";
+import {selectTaskList} from "../../../shared/selectors/list.selectors";
+import {TaskModel} from "../../../shared/models/task.model";
 
 @Component({
   selector: 'app-task-list',

@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../../services/user.service";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {catchError, EMPTY, map, mergeMap, tap} from "rxjs";
 import * as LoginPageActions from "./login.actions";
-import {AuthorizedUserModel} from "../../shared/models/authorized-user.model";
+import {AuthorizedUserModel} from "../../../shared/models/authorized-user.model";
 import {Router} from "@angular/router";
 
 @Injectable()

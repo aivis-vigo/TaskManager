@@ -1,20 +1,19 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {map, Observable, Subject, takeUntil, tap} from "rxjs";
-import {UserService} from "../../services/user.service";
 import {ActivatedRoute} from "@angular/router";
-import {UserModel} from "../../shared/models/user.model";
-import {InputValidatorComponent} from "../input-validator/input-validator.component";
-import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
-import {RoleModel} from "../../shared/models/role.model";
+import {UserModel} from "../../../shared/models/user.model";
+import {InputValidatorComponent} from "../../shared/input-validator/input-validator.component";
+import {FormSubmitButtonComponent} from "../../shared/form-submit-button/form-submit-button.component";
+import {RoleModel} from "../../../shared/models/role.model";
 import {AsyncPipe} from "@angular/common";
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
 import {Store} from "@ngrx/store";
-import {AppState} from "../../shared/models/state.model";
-import {selectOpenedUser} from "../../shared/selectors/user.selectors";
-import {updateUser} from "../../shared/actions/user.actions";
-import {loadInitialRoles} from "../../shared/actions/role.actions";
-import {selectRoleList} from "../../shared/selectors/role.selectors";
+import {AppState} from "../../../shared/models/state.model";
+import {selectOpenedUser} from "../../../shared/selectors/user.selectors";
+import {updateUser} from "../../../shared/actions/user.actions";
+import {loadInitialRoles} from "../../../shared/actions/role.actions";
+import {selectRoleList} from "../../../shared/selectors/role.selectors";
 
 @Component({
   selector: 'app-user-details',
@@ -47,7 +46,6 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   editMode: boolean = false;
 
   constructor(
-    protected userService: UserService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private store: Store<AppState>
@@ -79,20 +77,22 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   }
 
   manageRole(role: string, input: EventTarget | null): void {
-    const currentRoles = (this.currentUser.get('roles') as FormArray).value;
     const isChecked = (input as HTMLInputElement).checked;
 
-    if (isChecked) {
-      currentRoles.push(this.fb.control(role).value);
-    } else {
-      const index = currentRoles.findIndex((currentRole: string) => currentRole === role);
-      if (index !== -1) {
-        currentRoles.splice(index, 1);
-      }
-    }
+    if (this.roles) {
+      const roles = [...this.roles.value];
 
-    if (this.roles && currentRoles) {
-      this.roles.setValue(currentRoles);
+      if (isChecked) {
+        if (!roles.includes(role)) {
+          roles.push(role);
+        }
+      } else {
+        const filteredRoles = roles.filter(currentRole => currentRole !== role);
+        this.roles.setValue(filteredRoles);
+        return;
+      }
+
+      this.roles.setValue(roles);
     }
   }
 

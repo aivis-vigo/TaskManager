@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {matchingPasswordsValidator} from "../../shared/directives/matching-passwords.directive";
-import {InputValidatorComponent} from "../input-validator/input-validator.component";
+import {matchingPasswordsValidator} from "../../../shared/directives/matching-passwords.directive";
+import {InputValidatorComponent} from "../../shared/input-validator/input-validator.component";
 import {NgClass} from "@angular/common";
-import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
+import {FormSubmitButtonComponent} from "../../shared/form-submit-button/form-submit-button.component";
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
-import {AppState} from "../../shared/models/state.model";
+import {AppState} from "../../../shared/models/state.model";
 import {Store} from "@ngrx/store";
 import {register} from "../login/login.actions";
 

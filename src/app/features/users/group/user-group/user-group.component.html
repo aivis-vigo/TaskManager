@@ -1,0 +1,31 @@
+<form [formGroup]="currentGroup" (ngSubmit)="onSubmit()">
+
+  <div class="form-layout">
+    <div>
+      <label for="title" [translate]="'createTaskForm.title'"></label>
+      <input id="title" type="text" formControlName="title" required>
+      <app-input-validator [property]="title" [minLength]="5"></app-input-validator>
+    </div>
+
+    <div>
+      <label for="description" [translate]="'createTaskForm.description'"></label>
+      <input id="description" type="text" formControlName="description" required>
+      <app-input-validator [property]="description" [minLength]="10"></app-input-validator>
+    </div>
+
+    @for (user of userList$ | async; track user) {
+      <div>
+        <input
+          type="checkbox"
+          [value]="user.username"
+          (change)="manageUser(user.username, $event.target)">
+        <label>
+          {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
+        </label>
+      </div>
+    }
+  </div>
+
+  <app-form-submit-button [formIsValid]="currentGroup.valid" [text]="'button.create'"></app-form-submit-button>
+
+</form>

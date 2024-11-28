@@ -1,17 +1,17 @@
 import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AsyncPipe, NgClass} from "@angular/common";
-import {InputValidatorComponent} from "../input-validator/input-validator.component";
+import {InputValidatorComponent} from "../../shared/input-validator/input-validator.component";
 import {Observable} from "rxjs";
-import {UserModel} from "../../shared/models/user.model";
-import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
+import {UserModel} from "../../../shared/models/user.model";
+import {FormSubmitButtonComponent} from "../../shared/form-submit-button/form-submit-button.component";
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
 import {Store} from "@ngrx/store";
-import {AppState} from "../../shared/models/state.model";
-import {loadInitialUsers} from "../../shared/actions/user.actions";
-import {selectUserList} from "../../shared/selectors/user.selectors";
-import {createTask} from "../../shared/actions/list.actions";
-import {UserStore} from "../../shared/user.store";
+import {AppState} from "../../../shared/models/state.model";
+import {loadInitialUsers} from "../../../shared/actions/user.actions";
+import {selectUserList} from "../../../shared/selectors/user.selectors";
+import {createTask} from "../../../shared/actions/list.actions";
+import {UserStore} from "../../../shared/user.store";
 
 @Component({
   selector: 'app-create-task',

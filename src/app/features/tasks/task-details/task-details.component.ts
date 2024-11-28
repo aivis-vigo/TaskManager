@@ -1,21 +1,20 @@
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {TaskModel} from "../../shared/models/task.model";
+import {TaskModel} from "../../../shared/models/task.model";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {InputValidatorComponent} from "../input-validator/input-validator.component";
+import {InputValidatorComponent} from "../../shared/input-validator/input-validator.component";
 import {AsyncPipe, NgClass} from "@angular/common";
-import {UserService} from "../../services/user.service";
-import {UserModel} from "../../shared/models/user.model";
-import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
+import {UserModel} from "../../../shared/models/user.model";
+import {FormSubmitButtonComponent} from "../../shared/form-submit-button/form-submit-button.component";
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
 import {Store} from "@ngrx/store";
-import {AppState} from "../../shared/models/state.model";
-import {selectOpenedTask} from "../../shared/selectors/list.selectors";
-import {updateTask} from "../../shared/actions/list.actions";
-import {loadInitialUsers} from "../../shared/actions/user.actions";
-import {selectUserList} from "../../shared/selectors/user.selectors";
-import {UserStore} from "../../shared/user.store";
+import {AppState} from "../../../shared/models/state.model";
+import {selectOpenedTask} from "../../../shared/selectors/list.selectors";
+import {updateTask} from "../../../shared/actions/list.actions";
+import {loadInitialUsers} from "../../../shared/actions/user.actions";
+import {selectUserList} from "../../../shared/selectors/user.selectors";
+import {UserStore} from "../../../shared/user.store";
 
 @Component({
   selector: 'app-task-details',
@@ -48,7 +47,6 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
   editMode: boolean = false;
 
   constructor(
-    protected userService: UserService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private store: Store<AppState>
@@ -99,8 +97,8 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
     return this.currentTask.get('status');
   }
 
-  ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
-  }
+    ngOnDestroy(): void {
+      this.destroy.next();
+      this.destroy.complete();
+    }
 }

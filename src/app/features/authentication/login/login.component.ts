@@ -3,8 +3,8 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {NgClass} from "@angular/common";
 import {Subject, takeUntil} from "rxjs";
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
-import {UserStore} from "../../shared/user.store";
-import {AuthorizedUserModel} from "../../shared/models/authorized-user.model";
+import {UserStore} from "../../../shared/user.store";
+import {AuthorizedUserModel} from "../../../shared/models/authorized-user.model";
 import {Router} from "@angular/router";
 
 @Component({

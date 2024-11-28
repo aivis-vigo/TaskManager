@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TaskModel} from "../shared/models/task.model";
-import {BehaviorSubject, first, Observable, tap} from "rxjs";
+import {Observable} from "rxjs";
 import {environment} from "../../environments/enviornment";
 
 @Injectable({
