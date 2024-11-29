@@ -1,6 +1,6 @@
 import {TranslateLoader} from "@ngx-translate/core";
 import {HttpClient} from "@angular/common/http";
-import {Observable, tap} from "rxjs";
+import {Observable} from "rxjs";
 import {TranslationModel} from "../models/translation.model";
 
 export class BackendTranslationLoader implements TranslateLoader {
