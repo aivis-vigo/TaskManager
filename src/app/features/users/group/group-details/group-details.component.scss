@@ -1,0 +1,27 @@
+* {
+  @apply text-custom-dark;
+}
+
+h1 {
+  @apply uppercase text-4xl text-end my-20 text-custom-darker-secondary;
+}
+
+input {
+  @apply items-center bg-custom-primary border-2 border-custom-darker-secondary rounded-lg p-1;
+}
+
+.details-container {
+  @apply mx-20;
+}
+
+.group-grid {
+  @apply grid grid-cols-3 gap-x-16 gap-y-8 mb-20;
+}
+
+.custom-button {
+  @apply mx-auto border-2 rounded-lg bg-custom-secondary border-custom-dark w-1/2;
+}
+
+.input-layout {
+  @apply flex flex-col;
+}

@@ -38,13 +38,13 @@
         <div class="space-y-2">
           <div class="w-full">
             <label for="description" [translate]="'registerForm.password'"></label>
-            <input id="description" type="text" formControlName="password" required>
+            <input id="description" type="password" formControlName="password" required>
             <app-input-validator [property]="password"></app-input-validator>
           </div>
 
           <div class="w-full">
             <label for="confirmPassword" [translate]="'registerForm.confirmPassword'"></label>
-            <input id="confirmPassword" type="text" formControlName="confirmPassword" required>
+            <input id="confirmPassword" type="password" formControlName="confirmPassword" required>
             <app-input-validator [property]="confirmPassword"></app-input-validator>
           </div>
         </div>

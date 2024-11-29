@@ -1,0 +1,19 @@
+* {
+  @apply text-custom-dark;
+}
+
+h1 {
+  @apply uppercase text-4xl text-end my-20 text-custom-darker-secondary;
+}
+
+.group-container {
+  @apply mx-20;
+}
+
+.group-grid {
+  @apply grid grid-cols-3 gap-x-16 gap-y-8;
+}
+
+.group {
+  @apply flex flex-col justify-between border-t-2 border-r-2 border-custom-darker-secondary rounded-tr-2xl h-full w-full pt-4 pr-4;
+}

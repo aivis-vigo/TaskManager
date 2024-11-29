@@ -1,14 +1,16 @@
-<div class="list-container">
+<div class="group-container">
+  <h1>Available Groups</h1>
+
   @if (groupList$) {
-    <ul class="task-grid">
+    <ul class="group-grid">
       @for (group of groupList$ | async; track group) {
         <li>
-          <div class="task-card">
+          <div class="group">
             <div class="cursor-pointer">
               <p (click)="viewGroup(group._id)">{{ group.title }}</p>
-              <p>Members: {{ group.members.length }}</p>
             </div>
-            <div>
+            <div class="flex flex-row justify-between">
+              <p class="text-sm">Members: {{ group.members.length }}</p>
               <button (click)="removeGroup(group._id)">
                 <svg class="h-8 w-8 text-red-500" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                      stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

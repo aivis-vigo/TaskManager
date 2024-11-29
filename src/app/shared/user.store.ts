@@ -5,6 +5,7 @@ import {computed, inject} from "@angular/core";
 import {UserService} from "../services/user.service";
 import {LoginCredentialsModel} from "./models/login-credentials.model";
 import {catchError, EMPTY, tap} from "rxjs";
+import {Router} from "@angular/router";
 
 const userState: AuthorizedUserModel = {
   user: {} as UserModel,
@@ -17,7 +18,7 @@ export const UserStore = signalStore(
   withComputed(({user, token}) => ({
     isLoggedIn: computed(() => user() !== userState.user && token() !== '')
   })),
-  withMethods((store, userService = inject(UserService)) => ({
+  withMethods((store, userService = inject(UserService), router = inject(Router)) => ({
 
       login(credentials: LoginCredentialsModel) {
         return userService.login(credentials).pipe(
@@ -35,7 +36,8 @@ export const UserStore = signalStore(
       },
 
       isAuthorized(role: string): boolean {
-        return store.user().roles.includes(role);
+        const roles = store.user().roles;
+        return roles ? roles.includes(role) : false;
       },
 
       logout(): void {
@@ -44,6 +46,7 @@ export const UserStore = signalStore(
           user: userState.user,
           token: userState.token,
         }));
+        router.navigateByUrl('/login');
       }
 
     }),

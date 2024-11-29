@@ -7,8 +7,6 @@ import {LanguageService} from "./services/language.service";
 import {FormsModule} from "@angular/forms";
 import {UserStore} from "./shared/user.store";
 
-/* todo: default language should be english */
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -31,4 +29,5 @@ export class AppComponent {
   constructor(protected userService: UserService, protected languageService: LanguageService) {
   }
 
+  protected readonly localStorage = localStorage;
 }

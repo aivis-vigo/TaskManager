@@ -1,110 +1,119 @@
 <!-- task: <id>-->
-<div class="details-layout">
-  <div class="task-header">
-    <h2>ID: {{ task._id }}</h2>
-    @if (userStore.isAuthorized('Admin')) {
-      <button (click)="toggleEditMode()">
-        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 20h9"/>
-          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-        </svg>
-      </button>
-    }
-  </div>
-
+<div class="details-container">
   @if (editMode) {
+    <h1>TICKET DETAILS</h1>
+
     <form [formGroup]="currentTask" (ngSubmit)="onUpdate()">
-      <div class="task-card">
-        <div>
-          <label for="title" [translate]="'createTaskForm.title'"></label>
-          <input id="title" type="text" formControlName="title" required>
-          <app-input-validator [property]="title" [minLength]="5"></app-input-validator>
-        </div>
-
-        <div>
-          <label for="description" [translate]="'createTaskForm.description'"></label>
-          <input id="description" type="text" formControlName="description" required>
-          <app-input-validator [property]="description" [minLength]="10"></app-input-validator>
-        </div>
-
-        <div>
-          <label for="type" [translate]="'createTaskForm.type'"></label>
-          <input id="type" type="text" formControlName="type" required>
-          <app-input-validator [property]="type"></app-input-validator>
-        </div>
-
-        <div>
-          <label for="status" [translate]="'createTaskForm.status'"></label>
-          <input id="status" type="text" formControlName="status" required>
-        </div>
-        <app-input-validator [property]="status"></app-input-validator>
-
-        @if (userStore.isAuthorized('Manager')) {
-          <div>
-            <label for="assignedToUser" [translate]="'createTaskForm.assignedToUser'"></label>
-            <select id="assignedToUser" formControlName="assignedToUser">
-              <option value="Unassigned">Unassigned</option>
-              @for (user of userList$ | async; track user) {
-                <option [value]="user.username" [selected]="user.username === task.assignedToUser">
-                  {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
-                </option>
-              }
-            </select>
+      <div class="ticket-details-layout">
+        <div class="space-y-16">
+          <div class="input-layout">
+            <label for="title" [translate]="'createTaskForm.title'"></label>
+            <input id="title" type="text" formControlName="title" required>
+            <app-input-validator [property]="title" [minLength]="5"></app-input-validator>
+          </div>
+          <div class="input-layout">
+            <label for="type" [translate]="'createTaskForm.type'"></label>
+            <input id="type" type="text" formControlName="type" required>
+            <app-input-validator [property]="type"></app-input-validator>
           </div>
 
-          <div>
-            <label for="assignedToGroup" [translate]="'createTaskForm.assignedToGroup'">Assigned To group:</label>
-            <select id="assignedToGroup" formControlName="assignedToGroup">
-              <option value="Unassigned">Unassigned</option>
-              @for (group of groupList$ | async; track group) {
-                <option [value]="group.title" [selected]="group.title === task.assignedToGroup">
-                  {{ group.title }}
-                </option>
-              }
-            </select>
+          <div class="input-layout">
+            <label for="status" [translate]="'createTaskForm.status'"></label>
+            <input id="status" type="text" formControlName="status" required>
+            <app-input-validator [property]="status"></app-input-validator>
           </div>
-        }
 
-        @if (errorMessage) {
-          <div>{{ errorMessage }}</div>
-        }
+          @if (userStore.isAuthorized('Manager')) {
+            <div class="input-layout">
+              <label for="assignedToUser" [translate]="'createTaskForm.assignedToUser'"></label>
+              <select id="assignedToUser" formControlName="assignedToUser">
+                <option value="Unassigned">Unassigned</option>
+                @for (user of userList$ | async; track user) {
+                  <option [value]="user.username" [selected]="user.username === task.assignedToUser">
+                    {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
+                  </option>
+                }
+              </select>
+            </div>
 
-        <app-form-submit-button [formIsValid]="currentTask.valid" [text]="'button.update'"></app-form-submit-button>
+            <div class="input-layout">
+              <label for="assignedToGroup" [translate]="'createTaskForm.assignedToGroup'">Assigned To group:</label>
+              <select id="assignedToGroup" formControlName="assignedToGroup">
+                <option value="Unassigned">Unassigned</option>
+                @for (group of groupList$ | async; track group) {
+                  <option [value]="group.title" [selected]="group.title === task.assignedToGroup">
+                    {{ group.title }}
+                  </option>
+                }
+              </select>
+            </div>
+          }
+        </div>
+        <div class="flex flex-col justify-between w-1/2">
+          <div class="input-layout">
+            <label for="description" [translate]="'createTaskForm.description'"></label>
+            <input id="description" type="text" formControlName="description" required>
+            <app-input-validator [property]="description" [minLength]="10"></app-input-validator>
+          </div>
+          <div>
+            @if (errorMessage) {
+              <div>{{ errorMessage }}</div>
+            }
 
+            <button [disabled]="!currentTask.valid" [translate]="'button.update'" class="custom-button" type="submit">
+            </button>
+          </div>
+        </div>
       </div>
     </form>
   } @else {
     @if (task) {
       <!-- task view -->
-      <div class="task-card">
-        <div>
-          <p>{{ 'createTaskForm.title' | translate }}:</p>
-          <p>{{ task.title }}</p>
+      <h1>TICKET DETAILS</h1>
+
+      <div class="ticket-details-layout">
+        <div class="space-y-16">
+          <div>
+            <p>{{ 'createTaskForm.title' | translate }}:</p>
+            <p>{{ task.title }}</p>
+          </div>
+          <div>
+            <p>{{ 'createTaskForm.type' | translate }}:</p>
+            <p>{{ task.type }}</p>
+          </div>
+          <div>
+            <p>{{ 'createTaskForm.status' | translate }}:</p>
+            <p>{{ task.status }}</p>
+          </div>
+          <div>
+            <p>{{ 'createTaskForm.assignedToUser' | translate }}:</p>
+            <p>{{ task.assignedToUser }}</p>
+          </div>
+          <div>
+            <p>{{ 'createTaskForm.assignedToGroup' | translate }}:</p>
+            <p>{{ task.assignedToGroup }}</p>
+          </div>
+          <div>
+            <p>{{ 'createTaskForm.createdOn' | translate }}:</p>
+            <p>{{ task.createdOn }}</p>
+          </div>
         </div>
-        <div>
-          <p>{{ 'createTaskForm.description' | translate }}:</p>
-          <p>{{ task.description }}</p>
-        </div>
-        <div>
-          <p>{{ 'createTaskForm.type' | translate }}:</p>
-          <p>{{ task.type }}</p>
-        </div>
-        <div>
-          <p>{{ 'createTaskForm.status' | translate }}:</p>
-          <p>{{ task.status }}</p>
-        </div>
-        <div>
-          <p>{{ 'createTaskForm.assignedToUser' | translate }}:</p>
-          <p>{{ task.assignedToUser }}</p>
-        </div>
-      <div>
-        <p>{{ 'createTaskForm.assignedToGroup' | translate }}:</p>
-        <p>{{ task.assignedToGroup }}</p>
-      </div>
-        <div>
-          <p>{{ 'createTaskForm.createdOn' | translate }}:</p>
-          <p>{{ task.createdOn }}</p>
+        <div class="flex flex-col justify-between w-1/2">
+          <div>
+            <p>{{ 'createTaskForm.description' | translate }}:</p>
+            <p class="text-justify">{{ task.description }}</p>
+          </div>
+          <div class="flex justify-end">
+            @if (userStore.isAuthorized('Admin')) {
+              <button (click)="toggleEditMode()">
+                <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9"/>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                </svg>
+              </button>
+            }
+          </div>
         </div>
       </div>
     }

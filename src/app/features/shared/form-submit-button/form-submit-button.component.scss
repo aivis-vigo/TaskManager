@@ -1,7 +1,3 @@
-.enabled-button {
-  @apply bg-blue-500;
-}
-
-.disabled-button {
-  @apply bg-red-500;
+button {
+  @apply mx-auto border-2 rounded-lg bg-custom-secondary border-custom-dark;
 }
