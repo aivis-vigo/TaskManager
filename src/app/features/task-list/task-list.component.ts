@@ -1,9 +1,12 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component} from '@angular/core';
 import {CreateTaskComponent} from "../create-task/create-task.component";
 import {AsyncPipe} from "@angular/common";
-import {Subject, takeUntil} from "rxjs";
-import {TaskService} from "../../services/task.service";
-import {Router} from "@angular/router";
+import {Observable} from "rxjs";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../shared/models/state.model";
+import {deleteTask, viewAll, viewOne} from "../../shared/actions/list.actions";
+import {selectTaskList} from "../../shared/selectors/list.selectors";
+import {TaskModel} from "../../shared/models/task.model";
 
 @Component({
   selector: 'app-task-list',
@@ -15,24 +18,18 @@ import {Router} from "@angular/router";
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
 })
-export class TaskListComponent implements OnDestroy {
-  destroy: Subject<void> = new Subject<void>();
+export class TaskListComponent {
+  tasks$: Observable<TaskModel[]> = this.store.select(selectTaskList);
 
-  constructor(protected taskService: TaskService, private router: Router) {
+  constructor(private store: Store<AppState>) {
+    this.store.dispatch(viewAll());
   }
 
   viewTask(taskId: string): void {
-    this.router.navigate(['/task-list', taskId]);
+    this.store.dispatch(viewOne({taskId: taskId}));
   }
 
   removeTask(taskId: string): void {
-    this.taskService.removeTask(taskId)
-      .pipe(takeUntil(this.destroy))
-      .subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
+    this.store.dispatch(deleteTask({taskId: taskId}));
   }
 }

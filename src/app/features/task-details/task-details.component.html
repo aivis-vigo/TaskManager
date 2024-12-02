@@ -2,7 +2,7 @@
 <div class="details-layout">
   <div class="task-header">
     <h2>ID: {{ task._id }}</h2>
-    @if (userService.isAuthorized('Admin')) {
+    @if (userStore.isAuthorized('Admin')) {
       <button (click)="toggleEditMode()">
         <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"
              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -40,12 +40,12 @@
         </div>
         <app-input-validator [property]="status"></app-input-validator>
 
-        @if (userService.isAuthorized('Manager')) {
+        @if (userStore.isAuthorized('Manager')) {
           <div>
             <label for="assignedTo" [translate]="'createTaskForm.assignedTo'"></label>
             <select id="assignedTo" formControlName="assignedTo">
               <option value="Unassigned">Unassigned</option>
-              @for (user of userService.users$ | async; track user) {
+              @for (user of userList$ | async; track user) {
                 <option [value]="user.username">
                   {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
                 </option>

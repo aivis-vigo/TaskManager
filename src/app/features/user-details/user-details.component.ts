@@ -1,16 +1,20 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Subject, takeUntil} from "rxjs";
+import {map, Observable, Subject, takeUntil, tap} from "rxjs";
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute} from "@angular/router";
 import {UserModel} from "../../shared/models/user.model";
 import {InputValidatorComponent} from "../input-validator/input-validator.component";
 import {FormSubmitButtonComponent} from "../form-submit-button/form-submit-button.component";
-import {RoleService} from "../../services/role.service";
 import {RoleModel} from "../../shared/models/role.model";
 import {AsyncPipe} from "@angular/common";
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
-import {LanguageService} from "../../services/language.service";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../shared/models/state.model";
+import {selectOpenedUser} from "../../shared/selectors/user.selectors";
+import {updateUser} from "../../shared/actions/user.actions";
+import {loadInitialRoles} from "../../shared/actions/role.actions";
+import {selectRoleList} from "../../shared/selectors/role.selectors";
 
 @Component({
   selector: 'app-user-details',
@@ -28,6 +32,9 @@ import {LanguageService} from "../../services/language.service";
   styleUrl: './user-details.component.scss'
 })
 export class UserDetailsComponent implements OnInit, OnDestroy {
+  roleList$: Observable<RoleModel[]> = this.store.select(selectRoleList).pipe(
+    map((roles: RoleModel[]) => roles.filter((role: RoleModel) => role.name !== 'Admin'))
+  );
   currentUser: FormGroup = this.fb.group({
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
@@ -41,17 +48,16 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     protected userService: UserService,
-    protected roleService: RoleService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private languageService: LanguageService
+    private store: Store<AppState>
   ) {
   }
 
   ngOnInit(): void {
     const userId: string | null = this.route.snapshot.paramMap.get('id');
     if (userId) {
-      this.userService.getUser(userId)
+      this.store.select(selectOpenedUser)
         .pipe(takeUntil(this.destroy))
         .subscribe((res: UserModel) => {
           this.user = res;
@@ -65,12 +71,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     } else {
       this.errorMessage = `Failed to fetch user with id: ${userId}`;
     }
-    this.roleService.loadInitialRoles()
-      .pipe(takeUntil(this.destroy))
-      .subscribe((res: RoleModel[]) => {
-        const filtered = res.filter(res => res.name !== 'Admin');
-        this.roleService.roleSubject.next(filtered);
-      })
+    this.store.dispatch(loadInitialRoles());
   }
 
   toggleEditMode(): void {
@@ -101,12 +102,8 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   }
 
   onUpdate(user: UserModel, updatedUser: FormGroup): void {
-    this.userService.updateUser(user._id, updatedUser.value)
-      .pipe(takeUntil(this.destroy))
-      .subscribe((res: UserModel) => {
-        this.user = res;
-        this.toggleEditMode();
-      })
+    this.store.dispatch(updateUser({userId: user._id, user: updatedUser.value}));
+    this.toggleEditMode();
   }
 
   get firstName() {

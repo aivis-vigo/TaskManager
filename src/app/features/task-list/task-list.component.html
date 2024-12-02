@@ -1,7 +1,7 @@
 <div class="list-container">
-  @if (taskService.tasks$) {
+  @if (tasks$) {
     <ul class="task-grid">
-      @for (task of taskService.tasks$ | async; track task) {
+      @for (task of tasks$ | async; track task) {
         <li>
           <div class="task-card">
             <div class="cursor-pointer">

@@ -1,9 +1,8 @@
-import {Injectable, signal, Signal, WritableSignal} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {BehaviorSubject, first, Observable} from "rxjs";
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 import {UserModel} from "../shared/models/user.model";
 import {environment} from "../../environments/enviornment";
-import {TaskModel} from "../shared/models/task.model";
 import {LoginCredentialsModel} from "../shared/models/login-credentials.model";
 import {AuthorizedUserModel} from "../shared/models/authorized-user.model";
 
@@ -11,11 +10,10 @@ import {AuthorizedUserModel} from "../shared/models/authorized-user.model";
   providedIn: 'root'
 })
 export class UserService {
-  userSubject: BehaviorSubject<UserModel[]> = new BehaviorSubject<UserModel[]>([]);
-  users$: Observable<UserModel[]> = this.userSubject.asObservable();
-  currentUserSig: WritableSignal<UserModel | null> = signal<UserModel | null>(null);
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+  ) {
   }
 
   loadInitialUsers(): Observable<UserModel[]> {
@@ -30,22 +28,12 @@ export class UserService {
     return this.http.post<AuthorizedUserModel>(`${environment.apiEndpoint}/login`, credentials);
   }
 
-  logout(): void {
-    localStorage.clear();
-    this.currentUserSig.set(null);
-  }
-
   getUser(id: string): Observable<UserModel> {
     return this.http.get<UserModel>(`${environment.apiEndpoint}/users/${id}`);
   }
 
   updateUser(userId: string, updatedUser: UserModel): Observable<UserModel> {
     return this.http.put<UserModel>(`${environment.apiEndpoint}/users/update/${userId}`, updatedUser);
-  }
-
-  isAuthorized(role: string): boolean {
-    const currentUser : UserModel | null = this.currentUserSig();
-    return currentUser ? currentUser.roles.includes(role) : false;
   }
 
   getAuthToken(): string | null {
