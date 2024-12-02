@@ -7,8 +7,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   const userStore = inject(UserStore);
   const token = userStore.token();
 
-  console.log(token);
-
   if (!token) {
     if (state.url === '/login' || state.url === '/register') {
       return true;

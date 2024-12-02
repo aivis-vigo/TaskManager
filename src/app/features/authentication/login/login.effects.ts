@@ -9,6 +9,13 @@ import {Router} from "@angular/router";
 @Injectable()
 export class LoginEffects {
 
+  constructor(
+    private actions$: Actions,
+    private userService: UserService,
+    private router: Router,
+  ) {
+  }
+
   registerUser$ = createEffect(() => this.actions$.pipe(
       ofType(LoginPageActions.register),
       mergeMap(({user}) => this.userService.register(user)
@@ -33,11 +40,4 @@ export class LoginEffects {
       )
     )
   );
-
-  constructor(
-    private actions$: Actions,
-    private userService: UserService,
-    private router: Router,
-  ) {
-  }
 }

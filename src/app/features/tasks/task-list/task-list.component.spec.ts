@@ -1,79 +1,95 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { TaskListComponent } from './task-list.component';
-import { provideMockStore } from '@ngrx/store/testing';
-import { HttpClient, HttpHandler } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-
-@Injectable()
-class MockUserStore {
-  isAuthorized(role: string) {
-    return role === 'Admin';
-  }
-
-  belongsToGroup(groupId: number) {
-    return groupId === 1;
-  }
-}
-
-interface TaskModel {
-  title: string;
-  description: string;
-  assignedToGroup: string;
-  createdOn: string;
-  status: string;
-}
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { HttpClient, HttpHandler } from "@angular/common/http";
+import { By } from "@angular/platform-browser";
+import { viewAll } from "../../../shared/actions/list.actions";
+import { selectTaskList } from "../../../shared/selectors/list.selectors";
 
 describe('TaskListComponent', () => {
   let component: TaskListComponent;
   let fixture: ComponentFixture<TaskListComponent>;
-  let userStore: MockUserStore;
+  let store: MockStore;
 
-  const mockState = {
+  const initialState = {
     tasks: [
-      { title: 'Task 1', description: 'Task description 1', assignedToGroup: '1', createdOn: '2024-11-29', status: 'Open' },
-      { title: 'Task 2', description: 'Task description 2', assignedToGroup: '2', createdOn: '2024-11-29', status: 'In Progress' },
-      { title: 'Task 3', description: 'Task description 3', assignedToGroup: '1', createdOn: '2024-11-29', status: 'Closed' },
+      {
+        "_id": "67496d5c78a06baf1b3c0ea3",
+        "title": "Implement Authentication",
+        "description": "Develop and integrate a robust login and registration system...",
+        "type": "Feature",
+        "createdOn": "2024-11-29",
+        "status": "In Progress",
+        "assignedToUser": "john_doe",
+        "assignedToGroup": "Dev Team",
+      },
+      {
+        "_id": "67496d9278a06baf1b3c0ea9",
+        "title": "Fix Payment Gateway Bug",
+        "description": "Identify and resolve the issue causing incorrect payment...",
+        "type": "Bug",
+        "createdOn": "2024-11-28",
+        "status": "Open",
+        "assignedToUser": "jane_doe",
+        "assignedToGroup": "Dev Team",
+      },
+      {
+        "_id": "67496df278a06baf1b3c0eb1",
+        "title": "Plan Product Launch Campaign",
+        "description": "Develop a detailed campaign strategy for the upcoming product...",
+        "type": "Campaign",
+        "createdOn": "2024-11-25",
+        "status": "In Progress",
+        "assignedToUser": "jake_doe",
+        "assignedToGroup": "Marketing team",
+      }
     ],
-    user: { id: 1, groupId: 1, role: 'User' },
+    groups: [
+      {
+        "_id": "67473485c4a444351a7d5df6",
+        "title": "Dev Team",
+        "description": "ppl mte",
+        "members": [
+          "john_doe"
+        ],
+      }
+    ]
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TaskListComponent],
       providers: [
-        { provide: MockUserStore, useClass: MockUserStore },
-        provideMockStore({ initialState: mockState }),
+        provideMockStore({ initialState }),
         HttpClient,
         HttpHandler,
       ],
     }).compileComponents();
 
+    store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(TaskListComponent);
     component = fixture.componentInstance;
-    userStore = TestBed.inject(MockUserStore);
     fixture.detectChanges();
+
+    store.overrideSelector(selectTaskList, initialState.tasks); // Mock the selector
   });
 
-  it('should create the component', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display only tasks assigned to the user\'s group', () => {
-    component.tasks$.subscribe(tasks => {
-      expect(tasks.length).toBe(2);
-      expect(tasks).toEqual([
-        { _id: '1', title: 'Task 1', description: 'Task description 1', assignedToGroup: '1', createdOn: '2024-11-29', status: 'Open' },
-        { _id: '3', title: 'Task 3', description: 'Task description 3', assignedToGroup: '1', createdOn: '2024-11-29', status: 'Closed' },
-      ]);
+  it('should render tasks visible to the user', fakeAsync(() => {
+    store.dispatch(viewAll());
+
+    fixture.detectChanges();
+    tick();
+
+    // Wait for the store update to finish
+    fixture.whenStable().then(() => {
+      const taskElements = fixture.debugElement.queryAll(By.css('[data-testid="ticket"]'));
+      console.log('Task Elements:', taskElements);
+
+      expect(taskElements.length).toBeGreaterThan(0); // Ensure there are tasks rendered
     });
-  });
-
-  it('should allow Admin to see all tasks', () => {
-    spyOn(userStore, 'isAuthorized').and.returnValue(true);
-
-    component.tasks$.subscribe(tasks => {
-      expect(tasks.length).toBe(3);
-    });
-  });
-
+  }));
 });

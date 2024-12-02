@@ -6,7 +6,7 @@
       @for (task of tasks$ | async; track task) {
         @if (belongsToGroup(task.assignedToGroup) || userStore.isAuthorized('Admin')) {
           <li>
-            <div class="ticket">
+            <div data-testid="ticket" class="ticket">
               <div class="cursor-pointer mb-2">
                 <p (click)="viewTask(task._id)">{{ task.title }}</p>
               </div>

@@ -9,6 +9,13 @@ import {Router} from "@angular/router";
 @Injectable()
 export class GroupEffects {
 
+  constructor(
+    private actions$: Actions,
+    private groupService: GroupService,
+    private router: Router,
+  ) {
+  }
+
   loadInitialGroups$ = createEffect(() => this.actions$.pipe(
     ofType(GroupActions.loadInitialGroups),
     mergeMap(() => this.groupService.loadInitialGroups().pipe(
@@ -61,10 +68,4 @@ export class GroupEffects {
     ))
   ));
 
-  constructor(
-    private actions$: Actions,
-    private groupService: GroupService,
-    private router: Router,
-  ) {
-  }
 }

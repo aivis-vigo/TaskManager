@@ -1,7 +1,7 @@
 import {Component, inject, OnDestroy} from '@angular/core';
 import {CreateTaskComponent} from "../create-task/create-task.component";
 import {AsyncPipe} from "@angular/common";
-import {Observable, Subject, takeUntil} from "rxjs";
+import {Observable, Subject, takeUntil, tap} from "rxjs";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../shared/models/state.model";
 import {deleteTask, viewAll, viewOne} from "../../../shared/actions/list.actions";

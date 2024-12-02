@@ -8,6 +8,12 @@ import {RoleService} from "../../services/role.service";
 @Injectable()
 export class RoleEffects {
 
+  constructor(
+    private actions$: Actions,
+    private roleService: RoleService,
+  ) {
+  }
+
   initialRoles$ = createEffect(() => this.actions$.pipe(
     ofType(RoleActions.loadInitialRoles),
     mergeMap(() => this.roleService.loadInitialRoles().pipe(
@@ -16,9 +22,4 @@ export class RoleEffects {
     ))
   ));
 
-  constructor(
-    private actions$: Actions,
-    private roleService: RoleService,
-  ) {
-  }
 }
