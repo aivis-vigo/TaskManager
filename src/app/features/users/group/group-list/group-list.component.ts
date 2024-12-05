@@ -25,7 +25,6 @@ export class GroupListComponent {
 
   viewGroup(groupId: string): void {
     this.store.dispatch(viewOneGroup({groupId: groupId}));
-    console.log(groupId);
   }
 
   removeGroup(groupId: string): void {

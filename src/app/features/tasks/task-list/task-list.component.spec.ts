@@ -71,7 +71,7 @@ describe('TaskListComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
 
-    store.overrideSelector(selectTaskList, initialState.tasks); // Mock the selector
+    store.overrideSelector(selectTaskList, initialState.tasks);
   });
 
   it('should create', () => {
@@ -84,12 +84,10 @@ describe('TaskListComponent', () => {
     fixture.detectChanges();
     tick();
 
-    // Wait for the store update to finish
     fixture.whenStable().then(() => {
       const taskElements = fixture.debugElement.queryAll(By.css('[data-testid="ticket"]'));
-      console.log('Task Elements:', taskElements);
 
-      expect(taskElements.length).toBeGreaterThan(0); // Ensure there are tasks rendered
+      expect(taskElements.length).toBeGreaterThan(0);
     });
   }));
 });
