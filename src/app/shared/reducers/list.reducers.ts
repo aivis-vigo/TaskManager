@@ -9,26 +9,6 @@ export const initialTasks = {
 
 export const taskReducer = createReducer(
   initialTasks,
-  on(TaskListActions.viewAll, (state) => ({
-      ...state,
-    })
-  ),
-  on(TaskListActions.viewOne, (state) => ({
-      ...state,
-    })
-  ),
-  on(TaskListActions.createTask, (state) => ({
-      ...state
-    })
-  ),
-  on(TaskListActions.updateTask, (state) => ({
-      ...state,
-    })
-  ),
-  on(TaskListActions.deleteTask, (state) => ({
-      ...state,
-    })
-  ),
   on(TaskListActions.viewAllSuccess, (state, {tasks}) => ({
     ...state,
     taskList: tasks
