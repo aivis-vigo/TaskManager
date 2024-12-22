@@ -1,8 +1,0 @@
-<div [translate]="'userList.title'"></div>
-<ul>
-  @for (user of userList$ | async; track user) {
-    <li (click)="viewUser(user._id)">
-      {{ user.username }}
-    </li>
-  }
-</ul>

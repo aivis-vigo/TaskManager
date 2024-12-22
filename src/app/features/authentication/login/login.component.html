@@ -1,0 +1,31 @@
+<div class="custom-container">
+  <h1>Login</h1>
+
+  <form [formGroup]="credentials" (ngSubmit)="onSubmit()">
+    <div class="form-input-field-layout">
+      <div>
+        <div>
+          <label for="title" [translate]="'loginForm.username'"></label>
+          <input id="title" type="text" formControlName="username" required>
+        </div>
+      </div>
+
+      <div></div>
+      <div></div>
+
+      <div>
+        <div>
+          <label for="description" [translate]="'loginForm.password'"></label>
+          <input id="description" type="password" formControlName="password" required>
+        </div>
+      </div>
+    </div>
+
+    @if (errorMessage) {
+      <p>{{ errorMessage }}</p>
+    }
+
+    <button class="enabled-button" type="submit" [translate]="'button.login'"></button>
+  </form>
+</div>
+

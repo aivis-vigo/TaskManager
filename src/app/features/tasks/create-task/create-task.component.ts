@@ -1,0 +1,80 @@
+import {Component, inject} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {AsyncPipe, NgClass} from "@angular/common";
+import {InputValidatorComponent} from "../../shared/input-validator/input-validator.component";
+import {Observable} from "rxjs";
+import {UserModel} from "../../../shared/models/user.model";
+import {FormSubmitButtonComponent} from "../../shared/form-submit-button/form-submit-button.component";
+import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../../shared/models/state.model";
+import {loadInitialUsers} from "../../../shared/actions/user.actions";
+import {selectUserList} from "../../../shared/selectors/user.selectors";
+import {createTask} from "../../../shared/actions/list.actions";
+import {UserStore} from "../../../shared/user.store";
+import {loadInitialGroups} from "../../../shared/actions/group.actions";
+import {GroupModel} from "../../../shared/models/group.model";
+import {selectGroupList} from "../../../shared/selectors/group.selectors";
+
+@Component({
+  selector: 'app-create-task',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgClass,
+    InputValidatorComponent,
+    AsyncPipe,
+    FormSubmitButtonComponent,
+    TranslatePipe,
+    TranslateDirective
+  ],
+  templateUrl: './create-task.component.html',
+  styleUrl: './create-task.component.scss'
+})
+export class CreateTaskComponent {
+  readonly userStore = inject(UserStore);
+  userList$: Observable<UserModel[]> = this.store.select(selectUserList);
+  groupList$: Observable<GroupModel[]> = this.store.select(selectGroupList);
+  currentTask: FormGroup = this.fb.group({
+    title: ['', [Validators.required, Validators.minLength(5)]],
+    description: ['', [Validators.required, Validators.minLength(10)]],
+    type: ['', [Validators.required]],
+    status: ['', [Validators.required]],
+    createdOn: ['', [Validators.required]],
+    assignedToUser: ['Unassigned', [Validators.required]],
+    assignedToGroup: ['Unassigned', [Validators.required]],
+  });
+
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<AppState>
+  ) {
+    this.store.dispatch(loadInitialUsers());
+    this.store.dispatch(loadInitialGroups());
+  }
+
+  onSubmit(): void {
+    this.store.dispatch(createTask({task: this.currentTask.value}));
+    this.currentTask.reset();
+  }
+
+  get title() {
+    return this.currentTask.get('title');
+  }
+
+  get description() {
+    return this.currentTask.get('description');
+  }
+
+  get type() {
+    return this.currentTask.get('type');
+  }
+
+  get status() {
+    return this.currentTask.get('status');
+  }
+
+  get createdOn() {
+    return this.currentTask.get('createdOn');
+  }
+}

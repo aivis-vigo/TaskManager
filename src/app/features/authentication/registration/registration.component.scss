@@ -1,0 +1,43 @@
+* {
+  @apply text-custom-dark;
+}
+
+h1 {
+  @apply uppercase text-4xl text-end mb-32 text-custom-darker-secondary;
+}
+
+form {
+  @apply flex flex-col;
+}
+
+input {
+  @apply items-center bg-custom-primary border-2 border-custom-darker-secondary rounded-lg p-1;
+}
+
+.custom-container {
+  @apply bg-custom-primary h-dvh w-full p-20;
+}
+
+.form-input-field-layout {
+  @apply grid grid-cols-3 grid-rows-3 gap-y-4 mb-48;
+}
+
+.form-input-field-layout > div:nth-child(5) {
+  @apply flex justify-center items-center;
+}
+
+.form-input-field-layout > div:last-child {
+  @apply flex justify-end;
+}
+
+.form-input-field-layout > div div {
+  @apply flex flex-col w-1/2;
+}
+
+.form-input-field-layout > div:last-child div div {
+  @apply w-full;
+}
+
+.custom-button {
+  @apply mx-auto text-center border-2 rounded-lg bg-custom-secondary border-custom-dark w-1/4;
+}

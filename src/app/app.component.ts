@@ -29,4 +29,5 @@ export class AppComponent {
   constructor(protected userService: UserService, protected languageService: LanguageService) {
   }
 
+  protected readonly localStorage = localStorage;
 }

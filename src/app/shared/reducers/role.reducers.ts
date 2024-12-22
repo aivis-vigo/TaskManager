@@ -10,10 +10,6 @@ export const initialRoles: RoleStateModel = {
 
 export const roleReducer = createReducer(
   initialRoles,
-  on(RoleActions.loadInitialRoles, (state) => ({
-      ...state
-    })
-  ),
   on(RoleActions.loadInitialRolesSuccess, (state, {roles}) => ({
       ...state,
       roleList: roles

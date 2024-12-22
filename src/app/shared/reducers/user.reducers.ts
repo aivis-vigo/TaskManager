@@ -10,18 +10,6 @@ export const initialUsers: UserListStateModel = {
 
 export const userReducer = createReducer(
   initialUsers,
-  on(UserActions.loadInitialUsers, (state) => ({
-      ...state
-    })
-  ),
-  on(UserActions.viewOne, (state) => ({
-      ...state
-    })
-  ),
-  on(UserActions.updateUser, (state) => ({
-      ...state
-    })
-  ),
   on(UserActions.loadInitialUsersSuccess, (state, {users}) => ({
     ...state,
     userList: users

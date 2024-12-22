@@ -1,0 +1,68 @@
+<div class="ticket-container">
+  <h1>CREATE TICKET</h1>
+
+  <form [formGroup]="currentTask" (ngSubmit)="onSubmit()">
+    <div class="form-layout">
+      <div>
+        <label for="title" [translate]="'createTaskForm.title'"></label>
+        <input id="title" type="text" formControlName="title" required>
+        <app-input-validator [property]="title" [minLength]="5"></app-input-validator>
+      </div>
+
+      <div>
+        <label for="description" [translate]="'createTaskForm.description'"></label>
+        <input id="description" type="text" formControlName="description" required>
+        <app-input-validator [property]="description" [minLength]="10"></app-input-validator>
+      </div>
+
+      <div>
+        <label for="type" [translate]="'createTaskForm.type'"></label>
+        <input id="type" type="text" formControlName="type" required>
+        <app-input-validator [property]="type"></app-input-validator>
+      </div>
+
+      <div>
+        <label for="status" [translate]="'createTaskForm.status'"></label>
+        <input id="status" type="text" formControlName="status" required>
+      </div>
+      <app-input-validator [property]="status"></app-input-validator>
+
+      <div>
+        <label for="createdOn" [translate]="'createTaskForm.createdOn'"></label>
+        <input id="createdOn" type="text" formControlName="createdOn" required>
+        <app-input-validator [property]="createdOn"></app-input-validator>
+      </div>
+
+      @if (userStore.isAuthorized('Manager')) {
+        <div>
+          <label for="assignedToUser" [translate]="'createTaskForm.assignedToUser'"></label>
+          <select id="assignedToUser" formControlName="assignedToUser">
+            <option value="Unassigned">Unassigned</option>
+            @for (user of userList$ | async; track user) {
+              <option [value]="user.username">
+                {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
+              </option>
+            }
+          </select>
+        </div>
+
+        <div>
+          <label for="assignedToGroup" [translate]="'createTaskForm.assignedToGroup'"></label>
+          <select id="assignedToGroup" formControlName="assignedToGroup">
+            <option value="Unassigned">Unassigned</option>
+            @for (group of groupList$ | async; track group) {
+              <option [value]="group.title">
+                {{ group.title }}
+              </option>
+            }
+          </select>
+        </div>
+      }
+    </div>
+
+    <div class="flex flex-row justify-center">
+      <button [disabled]="!currentTask.valid" [translate]="'button.create'" class="custom-button" type="submit">
+      </button>
+    </div>
+  </form>
+</div>

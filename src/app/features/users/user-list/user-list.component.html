@@ -1,0 +1,11 @@
+<div class="users-container">
+  <h1 [translate]="'userList.title'"></h1>
+
+  <ul class="user-grid">
+    @for (user of userList$ | async; track user) {
+      <li (click)="viewUser(user._id)" class="user">
+        {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
+      </li>
+    }
+  </ul>
+</div>

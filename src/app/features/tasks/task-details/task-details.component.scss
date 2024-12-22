@@ -1,0 +1,31 @@
+* {
+  @apply text-custom-dark;
+}
+
+h1 {
+  @apply uppercase text-4xl text-end my-20 text-custom-darker-secondary;
+}
+
+input, select {
+  @apply items-center bg-custom-primary border-2 border-custom-darker-secondary rounded-lg p-1;
+}
+
+.details-container {
+  @apply mx-20;
+}
+
+.details-layout {
+  @apply container mx-auto py-20;
+}
+
+.ticket-details-layout {
+  @apply flex flex-row justify-between;
+}
+
+.input-layout {
+  @apply flex flex-col;
+}
+
+.custom-button {
+  @apply mx-auto border-2 rounded-lg bg-custom-secondary border-custom-dark w-full;
+}

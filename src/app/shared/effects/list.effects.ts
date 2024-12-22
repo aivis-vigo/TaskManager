@@ -9,6 +9,13 @@ import {TaskModel} from "../models/task.model";
 @Injectable()
 export class TaskListEffects {
 
+  constructor(
+    private actions$: Actions,
+    private taskService: TaskService,
+    private router: Router,
+  ) {
+  }
+
   loadTasks$ = createEffect(() => this.actions$.pipe(
       ofType(TaskListActions.viewAll),
       mergeMap(() => this.taskService.loadInitialTasks().pipe(
@@ -61,11 +68,4 @@ export class TaskListEffects {
       catchError(() => EMPTY)
     ))
   ));
-
-  constructor(
-    private actions$: Actions,
-    private taskService: TaskService,
-    private router: Router,
-  ) {
-  }
 }
